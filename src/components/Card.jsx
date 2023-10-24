@@ -1,10 +1,12 @@
+import { useProducts } from "../context/ProductContext";
 import { Add, Cart, Heart, Substract } from "./Icon";
 
-const Card = ({ products }) => {
+const Card = () => {
+  const { filteredProducts } = useProducts();
   return (
     <div className="">
       <ul className="grid grid-cols-3 max-lg:grid-cols-2 gap-6 p-8">
-        {products.map((product) => (
+        {filteredProducts?.map((product) => (
           <li className="flex flex-col justify-between " key={product.id}>
             <Heart
               className={

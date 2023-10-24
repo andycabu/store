@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { useState, useId } from "react";
+import { useProducts } from "../context/ProductContext";
 
-const Filters = ({ changeFilters }) => {
+const Filters = () => {
+  const { setFilters } = useProducts();
   const [minPrice, setMinPrice] = useState(0);
+  const minPriceFilterId = useId();
+  const categoryFilterId = useId();
   const handleChangeMinPrice = (e) => {
     setMinPrice(e.target.value);
-    changeFilters((prevState) => ({
+    setFilters((prevState) => ({
       ...prevState,
       minPrice: e.target.value,
     }));
   };
   const handleChangeCategory = (e) => {
     setMinPrice(e.target.value);
-    changeFilters((prevState) => ({
+    setFilters((prevState) => ({
       ...prevState,
       category: e.target.value,
     }));
@@ -19,10 +23,10 @@ const Filters = ({ changeFilters }) => {
   return (
     <section className="flex justify-between items-center p-4">
       <div className="flex gap-4">
-        <label htmlFor="price">Price from: </label>
+        <label htmlFor={minPriceFilterId}>Price from: </label>
         <input
           type="range"
-          id="price"
+          id={minPriceFilterId}
           min="0"
           max="1000"
           onChange={handleChangeMinPrice}
@@ -30,8 +34,8 @@ const Filters = ({ changeFilters }) => {
         <span>€{minPrice}</span>
       </div>
       <div className="flex gap-4">
-        <label htmlFor="category">Category:</label>
-        <select name="category" id="category" onChange={handleChangeCategory}>
+        <label htmlFor={categoryFilterId}>Category:</label>
+        <select id={categoryFilterId} onChange={handleChangeCategory}>
           <option value="all">All</option>
           <option value="electronics">Electronics</option>
           <option value="jewelery">Jewelery</option>
