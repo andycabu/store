@@ -1,13 +1,17 @@
 import { useProducts } from "../context/ProductContext";
-import { Add, Cart, Heart, Substract } from "./Icon";
+import { Add, CartIcon, Heart, Substract } from "./Icon";
 
 const Card = () => {
-  const { filteredProducts } = useProducts();
+  const { filteredProducts, addToCart } = useProducts();
+
   return (
     <div className="">
       <ul className="grid grid-cols-3 max-lg:grid-cols-2 gap-6 p-8">
         {filteredProducts?.map((product) => (
-          <li className="flex flex-col justify-between " key={product.id}>
+          <li
+            className="flex flex-col justify-between bg-[var(--card-background-color)] box-shadow-1"
+            key={product.id}
+          >
             <Heart
               className={
                 "h-8 w-8 absolute text-red-600 cursor-pointer hover:text-red-700"
@@ -25,7 +29,7 @@ const Card = () => {
                 <strong className="text-gray-400 font-light text-xs ">
                   {product.category}
                 </strong>
-                <h2 className="">{product.name}</h2>
+                <h2 className="">{product.title}</h2>
                 <p className="">€{product.price}</p>
               </div>
               <div className=" flex">
@@ -40,9 +44,12 @@ const Card = () => {
                 </button>
               </div>
 
-              <button className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50  w-full flex items-center justify-center">
+              <button
+                onClick={() => addToCart(product)}
+                className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50  w-full flex items-center justify-center"
+              >
                 Add to order
-                <Cart />
+                <CartIcon className={"h-6 w-6"} />
               </button>
             </div>
           </li>

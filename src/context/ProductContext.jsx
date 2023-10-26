@@ -22,6 +22,26 @@ export const ProductProvider = ({ children }) => {
     category: "all",
     minPrice: 0,
   });
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (product) => {
+    const productInCartIndex = cart.findIndex((item) => item.id === product.id);
+    if (productInCartIndex >= 0) {
+      const newCart = structuredClone(cart);
+      newCart[productInCartIndex].quantity += 1;
+      return setCart(newCart);
+    }
+    setCart((prevState) => [
+      ...prevState,
+      {
+        ...product,
+        quantity: 1,
+      },
+    ]);
+  };
+  const clearCart = () => {
+    setCart([]);
+  };
 
   const getProducts = async () => {
     const res = await fetch(url);
@@ -44,7 +64,15 @@ export const ProductProvider = ({ children }) => {
   }, []);
   return (
     <ProductContext.Provider
-      value={{ filteredProducts, getProducts, setFilters }}
+      value={{
+        filteredProducts,
+        getProducts,
+        setFilters,
+        filters,
+        addToCart,
+        clearCart,
+        cart,
+      }}
     >
       {children}
     </ProductContext.Provider>
