@@ -1,59 +1,82 @@
-import { useProducts } from "../context/ProductContext";
-import { Add, CartIcon, Heart, Substract } from "./Icon";
+import { useProducts } from "../hooks/useProduct";
+import {
+  Add,
+  AddToCartIcon,
+  Heart,
+  RemoveFromCartIcon,
+  Substract,
+} from "./Icon";
 
 const Card = () => {
-  const { filteredProducts, addToCart } = useProducts();
+  const { filteredProducts, addToCart, cart, removeFromCart } = useProducts();
+
+  const checkProductInCart = (product) => {
+    return cart.some((item) => item.id === product.id);
+  };
 
   return (
     <div className="">
       <ul className="grid grid-cols-3 max-lg:grid-cols-2 gap-6 p-8">
-        {filteredProducts?.map((product) => (
-          <li
-            className="flex flex-col justify-between bg-[var(--card-background-color)] box-shadow-1"
-            key={product.id}
-          >
-            <Heart
-              className={
-                "h-8 w-8 absolute text-red-600 cursor-pointer hover:text-red-700"
-              }
-            />
-            <div>
-              <img
-                className="h-[22rem] w-full object-cover"
-                src={product.image}
-                alt=""
+        {filteredProducts?.map((product) => {
+          const isProdductInCart = checkProductInCart(product);
+          return (
+            <li
+              className="flex flex-col justify-between bg-[var(--card-background-color)] box-shadow-1"
+              key={product.id}
+            >
+              <Heart
+                className={
+                  "h-8 w-8 absolute text-red-600 cursor-pointer hover:text-red-700"
+                }
               />
-            </div>
-            <div className="flex flex-col justify-center items-center gap-4">
               <div>
-                <strong className="text-gray-400 font-light text-xs ">
-                  {product.category}
-                </strong>
-                <h2 className="">{product.title}</h2>
-                <p className="">€{product.price}</p>
+                <img
+                  className="h-[22rem] w-full object-cover"
+                  src={product.image}
+                  alt=""
+                />
               </div>
-              <div className=" flex">
-                <button className="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50  px-2 py-1 border-r border-gray-200">
-                  <Substract />
-                </button>
-                <div className="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100  px-4 py-1 select-none">
-                  2
+              <div className="flex flex-col justify-center items-center gap-4">
+                <div>
+                  <strong className="text-gray-400 font-light text-xs ">
+                    {product.category}
+                  </strong>
+                  <h2 className="">{product.title}</h2>
+                  <p className="">€{product.price}</p>
                 </div>
-                <button className="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50  px-2 py-1 border-r border-gray-200">
-                  <Add />
+                <div className=" flex">
+                  <button className="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50  px-2 py-1 border-r border-gray-200">
+                    <Substract />
+                  </button>
+                  <div className="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100  px-4 py-1 select-none">
+                    2
+                  </div>
+                  <button className="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50  px-2 py-1 border-r border-gray-200">
+                    <Add />
+                  </button>
+                </div>
+
+                <button
+                  onClick={() =>
+                    isProdductInCart
+                      ? removeFromCart(product)
+                      : addToCart(product)
+                  }
+                  className={`py-2 px-4 ${
+                    isProdductInCart && "bg-red-500 hover:bg-red-600"
+                  } bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50  w-full flex items-center justify-center gap-4`}
+                >
+                  {isProdductInCart ? "Remove from cart" : "Add to cart"}
+                  {isProdductInCart ? (
+                    <RemoveFromCartIcon className={"h-6 w-6"} />
+                  ) : (
+                    <AddToCartIcon className={"h-6 w-6"} />
+                  )}
                 </button>
               </div>
-
-              <button
-                onClick={() => addToCart(product)}
-                className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50  w-full flex items-center justify-center"
-              >
-                Add to order
-                <CartIcon className={"h-6 w-6"} />
-              </button>
-            </div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

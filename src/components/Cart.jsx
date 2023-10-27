@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { CartIcon, CloseIcon } from "./Icon";
-import { useProducts } from "../context/ProductContext";
+import { useProducts } from "../hooks/useProduct";
 
 const Cart = () => {
   const [check, setCheck] = useState(false);
   const changeCheck = () => {
     setCheck(!check);
   };
-  const { cart } = useProducts();
-
-  console.log(cart);
+  const { cart, clearCart } = useProducts();
 
   return (
     <>
@@ -38,7 +36,13 @@ const Cart = () => {
                 <footer className="flex gap-2 justify-center items-center">
                   <small>Qty: {item.quantity}</small>
                   <button>+</button>
-                  <button>clear</button>
+                  <button
+                    onClick={() => {
+                      clearCart();
+                    }}
+                  >
+                    clear
+                  </button>
                 </footer>
               </div>
             </li>

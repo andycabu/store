@@ -1,18 +1,8 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 
 import PropTypes from "prop-types";
 
 export const ProductContext = createContext();
-
-export const useProducts = () => {
-  const context = useContext(ProductContext);
-  if (!context) {
-    throw new Error(
-      "useProduct debe estar dentro del proveedor ProductContext"
-    );
-  }
-  return context;
-};
 
 export const ProductProvider = ({ children }) => {
   const url = "https://fakestoreapi.com/products";
@@ -41,6 +31,9 @@ export const ProductProvider = ({ children }) => {
   };
   const clearCart = () => {
     setCart([]);
+  };
+  const removeFromCart = (product) => {
+    setCart((prevState) => prevState.filter((item) => item.id !== product.id));
   };
 
   const getProducts = async () => {
@@ -72,6 +65,7 @@ export const ProductProvider = ({ children }) => {
         addToCart,
         clearCart,
         cart,
+        removeFromCart,
       }}
     >
       {children}

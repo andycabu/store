@@ -1,5 +1,5 @@
 import { useId } from "react";
-import { useProducts } from "../context/ProductContext";
+import { useProducts } from "../hooks/useProduct";
 
 const Filters = () => {
   const { filters, setFilters } = useProducts();
