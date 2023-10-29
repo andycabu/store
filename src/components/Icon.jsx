@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export function CartIcon({ className }) {
   return (
     <svg
@@ -100,7 +98,7 @@ export function CloseIcon({ className }) {
   );
 }
 
-export function User() {
+export function UserIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +116,7 @@ export function User() {
     </svg>
   );
 }
-export function Heart({ className }) {
+export function HeartIcon({ className }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +135,7 @@ export function Heart({ className }) {
   );
 }
 
-export function Menu() {
+export function MenuIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -155,7 +153,7 @@ export function Menu() {
     </svg>
   );
 }
-export function Add() {
+export function AddIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -173,7 +171,7 @@ export function Add() {
     </svg>
   );
 }
-export function Substract() {
+export function SubtractIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

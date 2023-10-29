@@ -1,4 +1,4 @@
-import { Heart, Menu, User } from "./Icon";
+import { HeartIcon, MenuIcon, UserIcon } from "./Icon";
 import Cart from "./Cart";
 import logo from "../assets/img/logo.png";
 
@@ -19,7 +19,7 @@ const Navbar = () => {
   ];
   return (
     <header>
-      <nav className="flex justify-between bg-[var(--card-background-color)] text-[var(--text-color)]  box-shadow-1">
+      <nav className="flex fixed z-10 w-full justify-between bg-[var(--card-background-color)] text-[var(--text-color)]  box-shadow-1">
         <div className="px-5 xl:px-12 py-5 flex w-full items-center">
           <a className="text-3xl font-bold font-heading" href="#">
             <img className="h-12 rounded-full" src={logo} alt="" />
@@ -27,20 +27,18 @@ const Navbar = () => {
           <ul className="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
             {itemsNabar.map((item) => (
               <li key={item.id}>
-                <a className="hover:text-gray-200 cursor-pointer ">
-                  {item.text}
-                </a>
+                <a className=" cursor-pointer ">{item.text}</a>
               </li>
             ))}
           </ul>
 
           <div className="flex  space-x-5 items-center">
             <div className="hidden lg:flex  space-x-5 items-center">
-              <a className="hover:text-gray-200" href="#">
-                <Heart className={"h-6 w-6"} />
+              <a href="#">
+                <HeartIcon className={"h-6 w-6"} />
               </a>
-              <a className="flex items-center hover:text-gray-200" href="#">
-                <User />
+              <a className="flex items-center " href="#">
+                <UserIcon />
               </a>
             </div>
             <div className="flex items-center ">
@@ -50,7 +48,7 @@ const Navbar = () => {
         </div>
 
         <a className="navbar-burger self-center mr-12 xl:hidden" href="#">
-          <Menu />
+          <MenuIcon />
         </a>
       </nav>
     </header>

@@ -1,23 +1,36 @@
 import { useState } from "react";
-import { CartIcon, CloseIcon } from "./Icon";
+import {
+  AddIcon,
+  CartIcon,
+  ClearCartIcon,
+  CloseIcon,
+  SubtractIcon,
+} from "./Icon";
 import { useProducts } from "../hooks/useProduct";
 
 const Cart = () => {
   const [check, setCheck] = useState(false);
   const changeCheck = () => {
-    setCheck(!check);
+    if (check) {
+      document.body.style.overflow = "";
+      setCheck(false);
+    } else {
+      document.body.style.overflow = "hidden";
+      setCheck(true);
+    }
   };
-  const { cart, clearCart } = useProducts();
+  const { cart, removeFromCart, addToCart, subtractToCart } = useProducts();
 
   return (
     <>
       <div onClick={changeCheck}>
         <CartIcon className={"h-6 w-6 hover:cursor-pointer"} />
       </div>
+
       <aside
         className={`${
-          check ? "flex flex-col gap-2" : "hidden"
-        }  bg-[var(--card-background-color)]  p-8 fixed right-0 top-0 w-72 h-full overflow-auto`}
+          check ? "right-0" : "-right-1/2"
+        } flex flex-col gap-2 bg-[var(--card-background-color)] z-10  p-8 fixed  top-0 w-1/2 h-full overflow-auto transition-all duration-500`}
       >
         <div onClick={changeCheck}>
           <CloseIcon className={"h-5 w-5 hover:cursor-pointer"} />
@@ -34,20 +47,45 @@ const Cart = () => {
               <div>
                 <strong>{item.title}</strong> - €{item.price}
                 <footer className="flex gap-2 justify-center items-center">
-                  <small>Qty: {item.quantity}</small>
-                  <button>+</button>
+                  <div className=" flex">
+                    <button
+                      onClick={() => subtractToCart(item)}
+                      className="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50  px-2 py-1 border-r border-gray-200"
+                    >
+                      <SubtractIcon />
+                    </button>
+                    <div className="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100  px-4 py-1 select-none">
+                      <small>Qty: {item.quantity}</small>
+                    </div>
+                    <button
+                      onClick={() => addToCart(item)}
+                      className="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50  px-2 py-1 border-r border-gray-200"
+                    >
+                      <AddIcon />
+                    </button>
+                  </div>
                   <button
                     onClick={() => {
-                      clearCart();
+                      removeFromCart(item);
                     }}
                   >
-                    clear
+                    <ClearCartIcon className={"h-6 w-6 "} />
                   </button>
                 </footer>
               </div>
             </li>
           ))}
         </ul>
+        {cart.length === 0 ? (
+          <span className="flex items-center justify-center h-full">
+            There are no products in the cart
+          </span>
+        ) : (
+          <div className="flex gap-4 items-center justify-center pt-4">
+            <span>Remove all</span>
+            <ClearCartIcon className={"h-6 w-6 "} />
+          </div>
+        )}
       </aside>
     </>
   );

@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="pt-28">
         <Filters />
         <Card />
       </main>

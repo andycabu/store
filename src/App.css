@@ -5,6 +5,7 @@
 :root {
   --background-color: #18181b;
   --text-color: #a1a1aa;
+  --text-color-hover: #87878f;
   --card-background-color: #202024;
   --card-border-color: rgba(255, 255, 255, 0.1);
   --card-box-shadow-1: rgba(0, 0, 0, 0.05);
@@ -42,6 +43,7 @@
 
 :root.light {
   --text-color: #52525b;
+  --text-color-hover: #3f3f46;
   --background-color: #faf6f6;
   --card-background-color: #ffffff;
   --card-border-color: rgba(24, 24, 27, 0.08);
@@ -86,6 +88,7 @@ body {
   background-color: var(--background-color);
   overflow-x: hidden;
 }
+
 @layer utilities {
   .box-shadow-1 {
     box-shadow: 0px var(--card-box-shadow-1-y) var(--card-box-shadow-1-blur)
@@ -98,7 +101,7 @@ body {
 
 .day-night {
   cursor: pointer;
-  position: fixed;
+  position: absolute;
   right: 10px;
   top: 10px;
   opacity: 1;

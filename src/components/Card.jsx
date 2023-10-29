@@ -1,11 +1,5 @@
 import { useProducts } from "../hooks/useProduct";
-import {
-  Add,
-  AddToCartIcon,
-  Heart,
-  RemoveFromCartIcon,
-  Substract,
-} from "./Icon";
+import { AddToCartIcon, HeartIcon, RemoveFromCartIcon } from "./Icon";
 
 const Card = () => {
   const { filteredProducts, addToCart, cart, removeFromCart } = useProducts();
@@ -24,7 +18,7 @@ const Card = () => {
               className="flex flex-col justify-between bg-[var(--card-background-color)] box-shadow-1"
               key={product.id}
             >
-              <Heart
+              <HeartIcon
                 className={
                   "h-8 w-8 absolute text-red-600 cursor-pointer hover:text-red-700"
                 }
@@ -44,17 +38,6 @@ const Card = () => {
                   <h2 className="">{product.title}</h2>
                   <p className="">€{product.price}</p>
                 </div>
-                <div className=" flex">
-                  <button className="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50  px-2 py-1 border-r border-gray-200">
-                    <Substract />
-                  </button>
-                  <div className="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100  px-4 py-1 select-none">
-                    2
-                  </div>
-                  <button className="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50  px-2 py-1 border-r border-gray-200">
-                    <Add />
-                  </button>
-                </div>
 
                 <button
                   onClick={() =>
@@ -70,7 +53,7 @@ const Card = () => {
                   {isProdductInCart ? (
                     <RemoveFromCartIcon className={"h-6 w-6"} />
                   ) : (
-                    <AddToCartIcon className={"h-6 w-6"} />
+                    <AddToCartIcon className={"h-6 w-6 "} />
                   )}
                 </button>
               </div>
