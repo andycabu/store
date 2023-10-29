@@ -3,7 +3,11 @@ import { createContext, useState, useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 
 export const ProductContext = createContext();
-const initialState = [];
+const initialState = JSON.parse(window.localStorage.getItem("cart")) || [];
+
+const updateToLocalStorage = (state) => {
+  window.localStorage.setItem("cart", JSON.stringify(state));
+};
 const reducer = (state, action) => {
   const { type: actionType, payload: actionPayload } = action;
   const { id } = actionPayload;
@@ -14,15 +18,20 @@ const reducer = (state, action) => {
       if (productInCartIndex >= 0) {
         const newCart = structuredClone(state);
         newCart[productInCartIndex].quantity += 1;
+        updateToLocalStorage(newCart);
+
         return newCart;
       }
-      return [
+
+      const newState = [
         ...state,
         {
           ...actionPayload,
           quantity: +1,
         },
       ];
+      updateToLocalStorage(newState);
+      return newState;
     }
     case "SUBTRACT_TO_CART": {
       if (productInCartIndex >= 0) {
@@ -31,14 +40,19 @@ const reducer = (state, action) => {
         if (newCart[productInCartIndex].quantity > 1) {
           newCart[productInCartIndex].quantity -= 1;
         }
+        updateToLocalStorage(newCart);
         return newCart;
       }
     }
     // eslint-disable-next-line no-fallthrough
     case "REMOVE_FROM_CART": {
-      return state.filter((item) => item.id !== id);
+      const newState = state.filter((item) => item.id !== id);
+
+      updateToLocalStorage(newState);
+      return newState;
     }
     case "CLEAR_CART": {
+      updateToLocalStorage(initialState);
       return initialState;
     }
   }
