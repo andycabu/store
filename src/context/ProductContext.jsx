@@ -77,6 +77,11 @@ export const ProductProvider = ({ children }) => {
       payload: product,
     });
 
+  const addToFavorite = (product) =>
+    dispatch({
+      type: "ADD_TO_FAVORITE",
+      payload: product,
+    });
   const getProducts = async () => {
     const res = await fetch(url);
     const data = await res.json();
@@ -102,6 +107,7 @@ export const ProductProvider = ({ children }) => {
         filteredProducts,
         getProducts,
         setFilters,
+        addToFavorite,
         filters,
         addToCart,
         clearCart,

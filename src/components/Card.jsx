@@ -1,8 +1,8 @@
 import { useProducts } from "../hooks/useProduct";
 import { AddToCartIcon, HeartIcon, RemoveFromCartIcon } from "./Icon";
 
-const Card = () => {
-  const { filteredProducts, addToCart, cart, removeFromCart } = useProducts();
+const Card = ({ products }) => {
+  const { addToCart, cart, removeFromCart } = useProducts();
 
   const checkProductInCart = (product) => {
     return cart.some((item) => item.id === product.id);
@@ -11,7 +11,7 @@ const Card = () => {
   return (
     <div className="">
       <ul className="grid grid-cols-3 max-lg:grid-cols-2 gap-6 p-8">
-        {filteredProducts?.map((product) => {
+        {products.map((product) => {
           const isProdductInCart = checkProductInCart(product);
           return (
             <li

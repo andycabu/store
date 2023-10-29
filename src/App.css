@@ -5,7 +5,7 @@
 :root {
   --background-color: #18181b;
   --text-color: #a1a1aa;
-  --text-color-hover: #87878f;
+  --text-color-hover: #c8c8d6;
   --card-background-color: #202024;
   --card-border-color: rgba(255, 255, 255, 0.1);
   --card-box-shadow-1: rgba(0, 0, 0, 0.05);
@@ -43,7 +43,7 @@
 
 :root.light {
   --text-color: #52525b;
-  --text-color-hover: #3f3f46;
+  --text-color-hover: #222225;
   --background-color: #faf6f6;
   --card-background-color: #ffffff;
   --card-border-color: rgba(24, 24, 27, 0.08);
@@ -84,7 +84,6 @@ body {
   min-height: 100vh;
   color: var(--text-color);
   font-family: "Montserrat", sans-serif;
-
   background-color: var(--background-color);
   overflow-x: hidden;
 }
