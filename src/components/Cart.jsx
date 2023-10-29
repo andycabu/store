@@ -29,8 +29,8 @@ const Cart = () => {
 
       <aside
         className={`${
-          check ? "right-0" : "-right-1/2"
-        } flex flex-col gap-2 bg-[var(--card-background-color)] z-10  p-8 fixed  top-0 w-1/2 h-full overflow-auto transition-all duration-500`}
+          check ? "right-0" : "-right-1/2 max-[425px]:-right-full"
+        } flex flex-col gap-2 bg-[var(--card-background-color)] max-[425px]:w-full z-10  p-8 fixed  top-0 w-1/2 h-full overflow-auto transition-all duration-500`}
       >
         <div onClick={changeCheck}>
           <CloseIcon className={"h-5 w-5 hover:cursor-pointer"} />

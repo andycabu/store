@@ -19,7 +19,7 @@ const Filters = () => {
     }));
   };
   return (
-    <section className="flex justify-between items-center p-4">
+    <section className="flex justify-between max-[425px]:flex-col max-[425px]:gap-4 items-center p-4">
       <div className="flex gap-4">
         <label htmlFor={minPriceFilterId}>Price from: </label>
         <input

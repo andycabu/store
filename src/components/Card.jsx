@@ -10,7 +10,7 @@ const Card = ({ products }) => {
 
   return (
     <div className="">
-      <ul className="grid grid-cols-3 max-lg:grid-cols-2 gap-6 p-8">
+      <ul className="grid grid-cols-3 max-lg:grid-cols-2 max-[425px]:grid-cols-1 gap-6 p-8">
         {products.map((product) => {
           const isProdductInCart = checkProductInCart(product);
           return (
