@@ -1,15 +1,13 @@
-import { useState } from "react";
-import {
-  AddIcon,
-  CartIcon,
-  ClearCartIcon,
-  CloseIcon,
-  SubtractIcon,
-} from "./Icon";
+import { useEffect, useState } from "react";
+import { AddIcon, ClearCartIcon, CloseIcon, SubtractIcon } from "./Icon";
 import { useProducts } from "../hooks/useProduct";
+import { FaShoppingCart } from "react-icons/fa";
 
 const Cart = () => {
   const [check, setCheck] = useState(false);
+  const [itemCount, setItemCount] = useState(0);
+  const { cart, removeFromCart, addToCart, subtractToCart } = useProducts();
+
   const changeCheck = () => {
     if (check) {
       document.body.style.overflow = "";
@@ -19,12 +17,23 @@ const Cart = () => {
       setCheck(true);
     }
   };
-  const { cart, removeFromCart, addToCart, subtractToCart } = useProducts();
+
+  useEffect(() => {
+    const calculateTotalItems = (items) => {
+      return items.reduce((sum, item) => sum + item.quantity, 0);
+    };
+
+    const totalItems = calculateTotalItems(cart);
+    setItemCount(totalItems);
+  }, [cart]);
 
   return (
     <>
-      <div onClick={changeCheck}>
-        <CartIcon className={"h-6 w-6 hover:cursor-pointer"} />
+      <div className="relative cursor-pointer" onClick={changeCheck}>
+        <FaShoppingCart className={"h-6 w-6 "} />
+        <span className="absolute -top-[10px] -right-[10px] bg-red-500 text-white rounded-[50%] w-[15px] h-[15px] flex justify-center items-center text-[10px] p-1">
+          {itemCount}
+        </span>
       </div>
 
       <aside
@@ -46,7 +55,7 @@ const Cart = () => {
               />
               <div>
                 <strong>{item.title}</strong> - €{item.price}
-                <footer className="flex gap-2 justify-center items-center">
+                <div className="flex gap-2 justify-center items-center">
                   <div className=" flex">
                     <button
                       onClick={() => subtractToCart(item)}
@@ -71,7 +80,7 @@ const Cart = () => {
                   >
                     <ClearCartIcon className={"h-6 w-6 "} />
                   </button>
-                </footer>
+                </div>
               </div>
             </li>
           ))}

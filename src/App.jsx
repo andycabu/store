@@ -11,6 +11,7 @@ function App() {
     <>
       <BrowserRouter>
         <Navbar />
+
         <main className="pt-28">
           <Filters />
           <Routes>

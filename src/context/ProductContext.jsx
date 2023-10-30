@@ -8,15 +8,15 @@ const initialState = JSON.parse(window.localStorage.getItem("cart")) || [];
 const updateToLocalStorage = (state) => {
   window.localStorage.setItem("cart", JSON.stringify(state));
 };
-const reducer = (state, action) => {
+const reducer = (cart, action) => {
   const { type: actionType, payload: actionPayload } = action;
   const { id } = actionPayload;
-  const productInCartIndex = state.findIndex((item) => item.id === id);
+  const productInCartIndex = cart.findIndex((item) => item.id === id);
 
   switch (actionType) {
     case "ADD_TO_CART": {
       if (productInCartIndex >= 0) {
-        const newCart = structuredClone(state);
+        const newCart = structuredClone(cart);
         newCart[productInCartIndex].quantity += 1;
         updateToLocalStorage(newCart);
 
@@ -24,7 +24,7 @@ const reducer = (state, action) => {
       }
 
       const newState = [
-        ...state,
+        ...cart,
         {
           ...actionPayload,
           quantity: +1,
@@ -33,17 +33,9 @@ const reducer = (state, action) => {
       updateToLocalStorage(newState);
       return newState;
     }
-    case "ADD_TO_FAVORITE": {
-      const favorite = structuredClone(state);
-
-      updateToLocalStorage(favorite);
-
-      return favorite;
-    }
-
     case "SUBTRACT_TO_CART": {
       if (productInCartIndex >= 0) {
-        const newCart = structuredClone(state);
+        const newCart = structuredClone(cart);
 
         if (newCart[productInCartIndex].quantity > 1) {
           newCart[productInCartIndex].quantity -= 1;
@@ -54,7 +46,7 @@ const reducer = (state, action) => {
     }
     // eslint-disable-next-line no-fallthrough
     case "REMOVE_FROM_CART": {
-      const newState = state.filter((item) => item.id !== id);
+      const newState = cart.filter((item) => item.id !== id);
 
       updateToLocalStorage(newState);
       return newState;
@@ -64,11 +56,11 @@ const reducer = (state, action) => {
       return initialState;
     }
   }
-  return state;
+  return cart;
 };
 
 export const ProductProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [cart, dispatch] = useReducer(reducer, initialState);
   const url = "https://fakestoreapi.com/products";
 
   const [products, setProducts] = useState();
@@ -147,7 +139,7 @@ export const ProductProvider = ({ children }) => {
         filters,
         addToCart,
         clearCart,
-        cart: state,
+        cart,
         favorites,
         removeFromCart,
         subtractToCart,

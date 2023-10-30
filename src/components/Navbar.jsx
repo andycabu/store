@@ -57,12 +57,9 @@ const Navbar = () => {
           </div>
         </div>
 
-        <a
-          className="navbar-burger self-center mr-12 xl:hidden hover:text-[var(--text-color-hover)] "
-          href="#"
-        >
+        <div className="navbar-burger self-center mr-12 xl:hidden hover:text-[var(--text-color-hover)] ">
           <MenuIcon />
-        </a>
+        </div>
       </nav>
     </header>
   );

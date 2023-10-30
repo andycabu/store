@@ -1,9 +1,19 @@
 import { useProducts } from "../hooks/useProduct";
-import { AddToCartIcon, HeartIcon, RemoveFromCartIcon } from "./Icon";
+import { AddToCartIcon, RemoveFromCartIcon } from "./Icon";
+
 import PropTypes from "prop-types";
+import Like from "./Like";
+import { useState } from "react";
 const Card = ({ products }) => {
   const { addToCart, cart, removeFromCart, addToFavorite } = useProducts();
-
+  const [likedProducts, setLikedProducts] = useState(() => {
+    const favoritesFromStorage =
+      JSON.parse(localStorage.getItem("favorites")) || [];
+    return favoritesFromStorage.reduce((acc, product) => {
+      acc[product.id] = true;
+      return acc;
+    }, {});
+  });
   const checkProductInCart = (product) => {
     return cart.some((item) => item.id === product.id);
   };
@@ -18,12 +28,17 @@ const Card = ({ products }) => {
               className="flex flex-col justify-between bg-[var(--card-background-color)] box-shadow-1"
               key={product.id}
             >
-              <div onClick={() => addToFavorite(product)}>
-                <HeartIcon
-                  className={
-                    "h-8 w-8 absolute text-red-600 cursor-pointer hover:text-red-700"
-                  }
-                />
+              <div
+                onClick={() => {
+                  const isAlreadyFavorite = likedProducts[product.id];
+                  setLikedProducts((prev) => ({
+                    ...prev,
+                    [product.id]: !isAlreadyFavorite,
+                  }));
+                  addToFavorite(product);
+                }}
+              >
+                <Like checked={likedProducts[product.id]} />
               </div>
               <div>
                 <img
