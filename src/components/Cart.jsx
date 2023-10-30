@@ -10,10 +10,8 @@ const Cart = () => {
 
   const changeCheck = () => {
     if (check) {
-      document.body.style.overflow = "";
       setCheck(false);
     } else {
-      document.body.style.overflow = "hidden";
       setCheck(true);
     }
   };
