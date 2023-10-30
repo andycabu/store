@@ -2,14 +2,14 @@ import { useProducts } from "../hooks/useProduct";
 import { AddToCartIcon, HeartIcon, RemoveFromCartIcon } from "./Icon";
 import PropTypes from "prop-types";
 const Card = ({ products }) => {
-  const { addToCart, cart, removeFromCart } = useProducts();
+  const { addToCart, cart, removeFromCart, addToFavorite } = useProducts();
 
   const checkProductInCart = (product) => {
     return cart.some((item) => item.id === product.id);
   };
 
   return (
-    <div className="">
+    <div>
       <ul className="grid grid-cols-3 max-lg:grid-cols-2 max-[480px]:grid-cols-1 gap-6 p-8">
         {products.map((product) => {
           const isProdductInCart = checkProductInCart(product);
@@ -18,11 +18,13 @@ const Card = ({ products }) => {
               className="flex flex-col justify-between bg-[var(--card-background-color)] box-shadow-1"
               key={product.id}
             >
-              <HeartIcon
-                className={
-                  "h-8 w-8 absolute text-red-600 cursor-pointer hover:text-red-700"
-                }
-              />
+              <div onClick={() => addToFavorite(product)}>
+                <HeartIcon
+                  className={
+                    "h-8 w-8 absolute text-red-600 cursor-pointer hover:text-red-700"
+                  }
+                />
+              </div>
               <div>
                 <img
                   className="h-[22rem] w-full object-cover"
@@ -66,6 +68,6 @@ const Card = ({ products }) => {
 };
 
 Card.propTypes = {
-  products: PropTypes.object.isRequired,
+  products: PropTypes.array.isRequired,
 };
 export default Card;

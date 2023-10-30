@@ -1,18 +1,24 @@
 import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
-import Card from "./components/Card";
 import Filters from "./components/Filters";
-import { useProducts } from "./hooks/useProduct";
+import HomePage from "./pages/HomePage";
+import FavoritePage from "./pages/FavoritePage";
 
 function App() {
-  const { filteredProducts } = useProducts();
   return (
     <>
-      <Navbar />
-      <main className="pt-28">
-        <Filters />
-        <Card products={filteredProducts} />
-      </main>
+      <BrowserRouter>
+        <Navbar />
+        <main className="pt-28">
+          <Filters />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/favorites" element={<FavoritePage />} />
+          </Routes>
+        </main>
+      </BrowserRouter>
     </>
   );
 }

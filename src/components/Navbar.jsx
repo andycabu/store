@@ -1,12 +1,14 @@
 import { HeartIcon, MenuIcon, UserIcon } from "./Icon";
 import Cart from "./Cart";
 import logo from "../assets/img/logo.png";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const itemsNabar = [
     {
       id: 1,
       text: "Home",
+      link: "/",
     },
     {
       id: 2,
@@ -27,17 +29,24 @@ const Navbar = () => {
           <ul className="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
             {itemsNabar.map((item) => (
               <li key={item.id}>
-                <a className=" cursor-pointer hover:text-[var(--text-color-hover)]   ">
+                <Link
+                  to={item.link}
+                  className=" cursor-pointer hover:text-[var(--text-color-hover)]   "
+                >
                   {item.text}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
           <div className="flex  space-x-5 items-center ">
             <div className="hidden lg:flex  space-x-5 items-center">
-              <a className="hover:text-[var(--text-color-hover)] " href="#">
+              <Link
+                to="/favorites"
+                className="hover:text-[var(--text-color-hover)] "
+                href="#"
+              >
                 <HeartIcon className={"h-6 w-6"} />
-              </a>
+              </Link>
               <a className="hover:text-[var(--text-color-hover)] " href="#">
                 <UserIcon />
               </a>

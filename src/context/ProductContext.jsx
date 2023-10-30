@@ -33,6 +33,14 @@ const reducer = (state, action) => {
       updateToLocalStorage(newState);
       return newState;
     }
+    case "ADD_TO_FAVORITE": {
+      const favorite = structuredClone(state);
+
+      updateToLocalStorage(favorite);
+
+      return favorite;
+    }
+
     case "SUBTRACT_TO_CART": {
       if (productInCartIndex >= 0) {
         const newCart = structuredClone(state);
@@ -68,6 +76,13 @@ export const ProductProvider = ({ children }) => {
     category: "all",
     minPrice: 0,
   });
+  const [favorites, setFavorites] = useState(() => {
+    const savedFavorites = window.localStorage.getItem("favorites");
+    return savedFavorites ? JSON.parse(savedFavorites) : [];
+  });
+  const updateToLocalStorage = (state) => {
+    window.localStorage.setItem("favorites", JSON.stringify(state));
+  };
 
   const addToCart = (product) =>
     dispatch({
@@ -91,11 +106,18 @@ export const ProductProvider = ({ children }) => {
       payload: product,
     });
 
-  const addToFavorite = (product) =>
-    dispatch({
-      type: "ADD_TO_FAVORITE",
-      payload: product,
+  const addToFavorite = (product) => {
+    setFavorites((prevFavorites) => {
+      const isFavorite = prevFavorites.some((fav) => fav.id === product.id);
+      const newFavorites = isFavorite
+        ? prevFavorites.filter((fav) => fav.id !== product.id)
+        : [...prevFavorites, product];
+
+      updateToLocalStorage(newFavorites);
+
+      return newFavorites;
     });
+  };
   const getProducts = async () => {
     const res = await fetch(url);
     const data = await res.json();
@@ -126,6 +148,7 @@ export const ProductProvider = ({ children }) => {
         addToCart,
         clearCart,
         cart: state,
+        favorites,
         removeFromCart,
         subtractToCart,
       }}
