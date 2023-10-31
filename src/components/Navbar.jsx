@@ -27,15 +27,18 @@ const Navbar = () => {
     },
   ];
   useEffect(() => {
-    if (screenWidth > 1024) {
+    if (screenWidth > 768) {
+      document.body.style.overflow = "";
       setOpen(false);
     }
   }, [screenWidth]);
 
   function openMenu() {
     if (open) {
+      document.body.style.overflow = "";
       setOpen(false);
     } else {
+      document.body.style.overflow = "hidden";
       setOpen(true);
     }
   }
