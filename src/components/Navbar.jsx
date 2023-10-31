@@ -5,9 +5,12 @@ import { Link } from "react-router-dom";
 import { useScreenWidth } from "../hooks/useScreenWidth";
 
 import { useEffect, useState } from "react";
+import { useProducts } from "../hooks/useProduct";
 
 const Navbar = () => {
+  const { favorites } = useProducts();
   const [open, setOpen] = useState(false);
+  const [favoriteCount, setFavoriteCount] = useState(0);
 
   const screenWidth = useScreenWidth();
 
@@ -26,6 +29,10 @@ const Navbar = () => {
       text: "Contact us",
     },
   ];
+  useEffect(() => {
+    setFavoriteCount(favorites.length);
+  }, [favorites]);
+
   useEffect(() => {
     if (screenWidth > 768) {
       document.body.style.overflow = "";
@@ -65,10 +72,15 @@ const Navbar = () => {
             <div className="flex  space-x-5 items-center">
               <Link
                 to="/favorites"
-                className="hover:text-[var(--text-color-hover)] "
+                className="hover:text-[var(--text-color-hover)]  relative"
                 href="#"
               >
                 <HeartIcon className={"h-6 w-6"} />
+                {favoriteCount > 0 && (
+                  <span className="absolute -top-[10px] -right-[10px] bg-red-500 text-white rounded-[50%] w-[15px] h-[15px] flex justify-center items-center text-[10px] p-1">
+                    {favoriteCount}
+                  </span>
+                )}
               </Link>
               <a className="hover:text-[var(--text-color-hover)] " href="#">
                 <UserIcon />
