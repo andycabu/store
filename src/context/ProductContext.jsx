@@ -124,6 +124,7 @@ export const ProductProvider = ({ children }) => {
     });
   };
   const filteredProducts = filterProducts(products || []);
+  const filteredProductsFav = filterProducts(favorites || []);
   useEffect(() => {
     if (!products) {
       getProducts();
@@ -133,6 +134,7 @@ export const ProductProvider = ({ children }) => {
     <ProductContext.Provider
       value={{
         filteredProducts,
+        filteredProductsFav,
         getProducts,
         setFilters,
         addToFavorite,
