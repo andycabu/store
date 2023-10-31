@@ -1,6 +1,8 @@
+import PropTypes from "prop-types";
+
 const Like = ({ checked }) => {
   return (
-    <div className="absolute">
+    <div className="absolute z-[1]">
       <input checked={checked} type="checkbox" id="checkbox" />
       <label>
         <svg
@@ -67,5 +69,9 @@ const Like = ({ checked }) => {
       </label>
     </div>
   );
+};
+
+Like.propTypes = {
+  checked: PropTypes.any,
 };
 export default Like;

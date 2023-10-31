@@ -4,6 +4,7 @@ import { AddToCartIcon, RemoveFromCartIcon } from "./Icon";
 import PropTypes from "prop-types";
 import Like from "./Like";
 import { useState } from "react";
+import Button from "./Button";
 const Card = ({ products }) => {
   const { addToCart, cart, removeFromCart, addToFavorite } = useProducts();
   const [likedProducts, setLikedProducts] = useState(() => {
@@ -19,65 +20,66 @@ const Card = ({ products }) => {
   };
 
   return (
-    <div>
-      <ul className="grid grid-cols-3 max-lg:grid-cols-2 max-[480px]:grid-cols-1 gap-6 p-8">
-        {products.map((product) => {
-          const isProdductInCart = checkProductInCart(product);
-          return (
-            <li
-              className="flex flex-col justify-between bg-[var(--card-background-color)] box-shadow-1"
-              key={product.id}
+    <div className="grid grid-cols-3 justify-items-center max-lg:grid-cols-2 max-[840px]:grid-cols-1 gap-6 p-8">
+      {products.map((product) => {
+        const isProdductInCart = checkProductInCart(product);
+        return (
+          <div
+            key={product.id}
+            className="relative flex w-96 flex-col rounded-xl bg-[var(--card-background-color)] bg-clip-border  shadow-md"
+          >
+            <div
+              onClick={() => {
+                const isAlreadyFavorite = likedProducts[product.id];
+                setLikedProducts((prev) => ({
+                  ...prev,
+                  [product.id]: !isAlreadyFavorite,
+                }));
+                addToFavorite(product);
+              }}
             >
-              <div
-                onClick={() => {
-                  const isAlreadyFavorite = likedProducts[product.id];
-                  setLikedProducts((prev) => ({
-                    ...prev,
-                    [product.id]: !isAlreadyFavorite,
-                  }));
-                  addToFavorite(product);
-                }}
-              >
-                <Like checked={likedProducts[product.id]} />
+              <Like checked={likedProducts[product.id]} />
+            </div>
+            <div className="relative mx-4 mt-4 h-96 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
+              <img src={product.image} className="h-full w-full object-cover" />
+            </div>
+            <div className="flex flex-col justify-between h-[55%] p-6">
+              <div>
+                <div className="mb-2 flex items-center justify-between">
+                  <p className="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
+                    {product.title}
+                  </p>
+                  <p className="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
+                    €{product.price}
+                  </p>
+                </div>
+                <p className="block font-sans text-sm font-normal leading-normal antialiased opacity-75">
+                  {product.description}
+                </p>
               </div>
               <div>
-                <img
-                  className="h-[22rem] w-full object-cover"
-                  src={product.image}
-                  alt=""
-                />
-              </div>
-              <div className="flex flex-col justify-center items-center gap-4">
-                <div>
-                  <strong className="text-gray-400 font-light text-xs ">
-                    {product.category}
-                  </strong>
-                  <h2 className="">{product.title}</h2>
-                  <p className="">€{product.price}</p>
-                </div>
-
-                <button
+                <Button
                   onClick={() =>
                     isProdductInCart
                       ? removeFromCart(product)
                       : addToCart(product)
                   }
-                  className={`py-2 px-4 ${
-                    isProdductInCart && "bg-red-500 hover:bg-red-600"
-                  } bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50  w-full flex items-center justify-center gap-4`}
-                >
-                  {isProdductInCart ? "Remove from cart" : "Add to cart"}
-                  {isProdductInCart ? (
-                    <RemoveFromCartIcon className={"h-6 w-6"} />
-                  ) : (
-                    <AddToCartIcon className={"h-6 w-6 "} />
-                  )}
-                </button>
+                  background={isProdductInCart && "bg-red-500 "}
+                  hover={"hover:bg-red-600"}
+                  text={isProdductInCart ? "Remove from cart" : "Add to cart"}
+                  icon={
+                    isProdductInCart ? (
+                      <RemoveFromCartIcon className={"h-6 w-6"} />
+                    ) : (
+                      <AddToCartIcon className={"h-6 w-6 "} />
+                    )
+                  }
+                />
               </div>
-            </li>
-          );
-        })}
-      </ul>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };

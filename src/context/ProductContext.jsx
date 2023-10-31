@@ -10,8 +10,13 @@ const updateToLocalStorage = (state) => {
 };
 const reducer = (cart, action) => {
   const { type: actionType, payload: actionPayload } = action;
-  const { id } = actionPayload;
-  const productInCartIndex = cart.findIndex((item) => item.id === id);
+  let id;
+  let productInCartIndex;
+
+  if (actionPayload) {
+    ({ id } = actionPayload);
+    productInCartIndex = cart.findIndex((item) => item.id === id);
+  }
 
   switch (actionType) {
     case "ADD_TO_CART": {
@@ -52,8 +57,8 @@ const reducer = (cart, action) => {
       return newState;
     }
     case "CLEAR_CART": {
-      updateToLocalStorage(initialState);
-      return initialState;
+      updateToLocalStorage([]); // Esto actualizará localStorage
+      return [];
     }
   }
   return cart;
@@ -130,6 +135,7 @@ export const ProductProvider = ({ children }) => {
       getProducts();
     }
   }, []);
+
   return (
     <ProductContext.Provider
       value={{

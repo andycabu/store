@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { AddIcon, ClearCartIcon, CloseIcon, SubtractIcon } from "./Icon";
 import { useProducts } from "../hooks/useProduct";
 import { FaShoppingCart } from "react-icons/fa";
+import Button from "./Button";
 
 const Cart = () => {
   const [check, setCheck] = useState(false);
   const [cartCount, setCartCount] = useState(0);
-  const { cart, removeFromCart, addToCart, subtractToCart } = useProducts();
+  const { cart, removeFromCart, addToCart, subtractToCart, clearCart } =
+    useProducts();
 
   const changeCheck = () => {
     if (check) {
@@ -80,13 +82,14 @@ const Cart = () => {
                       <AddIcon />
                     </button>
                   </div>
-                  <button
+                  <Button
+                    background={"bg-red-500 "}
+                    hover={"hover:bg-red-600"}
                     onClick={() => {
                       removeFromCart(item);
                     }}
-                  >
-                    <ClearCartIcon className={"h-6 w-6 "} />
-                  </button>
+                    text={<ClearCartIcon className={"h-6 w-6 "} />}
+                  />
                 </div>
               </div>
             </li>
@@ -97,10 +100,15 @@ const Cart = () => {
             There are no products in the cart
           </span>
         ) : (
-          <div className="flex gap-4 items-center justify-center pt-4">
-            <span>Remove all</span>
-            <ClearCartIcon className={"h-6 w-6 "} />
-          </div>
+          <Button
+            background={"bg-red-500 "}
+            hover={"hover:bg-red-600"}
+            onClick={() => {
+              clearCart();
+            }}
+            text={"Remove all"}
+            icon={<ClearCartIcon className={"h-6 w-6 "} />}
+          />
         )}
       </aside>
     </>
