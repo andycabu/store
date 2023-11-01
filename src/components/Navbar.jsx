@@ -3,7 +3,7 @@ import Cart from "./Cart";
 import logo from "../assets/img/logo.png";
 import { Link } from "react-router-dom";
 import { useScreenWidth } from "../hooks/useScreenWidth";
-
+import DayNight from "./DayNight";
 import { useEffect, useState } from "react";
 import { useProducts } from "../hooks/useProduct";
 
@@ -50,8 +50,9 @@ const Navbar = () => {
     }
   }
   return (
-    <header>
-      <nav className="flex fixed z-10 w-full justify-between bg-[var(--card-background-color)] box-shadow-1">
+    <header className="relative">
+      <nav className="flex fixed z-10 w-full max-w-[1500px] justify-between bg-[var(--card-background-color)] box-shadow-1">
+        <DayNight />
         <div className="px-12 py-5 flex w-full items-center justify-between">
           <Link className="text-3xl font-bold font-heading" to={"/"}>
             <img className="h-12 rounded-full" src={logo} alt="" />
