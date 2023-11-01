@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const Like = ({ checked }) => {
   return (
-    <div className="absolute z-[1]">
+    <div className="absolute z-[1] p-2">
       <input checked={checked} type="checkbox" id="checkbox" />
       <label>
         <svg

@@ -53,9 +53,9 @@ const Navbar = () => {
     <header>
       <nav className="flex fixed z-10 w-full justify-between bg-[var(--card-background-color)] box-shadow-1">
         <div className="px-12 py-5 flex w-full items-center justify-between">
-          <a className="text-3xl font-bold font-heading" href="#">
+          <Link className="text-3xl font-bold font-heading" to={"/"}>
             <img className="h-12 rounded-full" src={logo} alt="" />
-          </a>
+          </Link>
           <ul className="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
             {itemsNabar.map((item) => (
               <li key={item.id}>
