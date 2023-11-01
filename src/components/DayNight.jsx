@@ -18,7 +18,7 @@ function DayNight() {
     setTheme(theme === "light" ? "dark" : "light");
   }
   return (
-    <label className="day-night z-50">
+    <label className="day-night z-10">
       <input onClick={changeTheme} type="checkbox" />
       <div></div>
     </label>

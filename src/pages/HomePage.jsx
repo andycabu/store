@@ -4,6 +4,10 @@ import { useProducts } from "../hooks/useProduct";
 const HomePage = () => {
   const { filteredProducts } = useProducts();
 
-  return <Card products={filteredProducts} />;
+  return (
+    <div className="grid justify-items-center grid-cols-auto-fit-minmax gap-6 p-8">
+      <Card products={filteredProducts} />
+    </div>
+  );
 };
 export default HomePage;

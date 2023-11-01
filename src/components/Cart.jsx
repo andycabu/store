@@ -3,6 +3,7 @@ import { AddIcon, ClearCartIcon, CloseIcon, SubtractIcon } from "./Icon";
 import { useProducts } from "../hooks/useProduct";
 import { FaShoppingCart } from "react-icons/fa";
 import Button from "./Button";
+import Card from "./Card";
 
 const Cart = () => {
   const [check, setCheck] = useState(false);
@@ -42,58 +43,17 @@ const Cart = () => {
 
       <aside
         className={`${
-          check ? "right-0" : "-right-1/2 max-[480px]:-right-full"
-        } flex flex-col gap-2 bg-[var(--card-background-color)] max-[480px]:w-full z-10  p-8 fixed  top-0 w-1/2 h-full overflow-auto transition-all duration-500`}
+          check
+            ? "right-0"
+            : "-right-1/2 max-xl:-right-[80%] max-md:-right-full"
+        } flex flex-col gap-2 bg-[var(--card-background-color)] max-xl:w-4/5 max-md:w-full  z-10  p-8 fixed  top-0 w-1/2 h-full overflow-auto transition-all duration-500`}
       >
         <div onClick={changeCheck}>
           <CloseIcon className={"h-5 w-5 hover:cursor-pointer"} />
         </div>
 
-        <ul className="flex flex-col gap-4">
-          {cart.map((item) => (
-            <li
-              key={item.id}
-              className="border-y flex p-4 gap-4 justify-center items-center border-solid shadow-md border-[#444] bg-[var(--background-color)]"
-            >
-              <div>
-                <img
-                  className="aspect-video w-full object-cover"
-                  src={item.image}
-                  alt=""
-                />
-              </div>
-              <div>
-                <strong>{item.title}</strong> - €{item.price}
-                <div className="flex gap-2 justify-center items-center">
-                  <div className=" flex">
-                    <button
-                      onClick={() => subtractToCart(item)}
-                      className="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50  px-2 py-1 border-r border-gray-200"
-                    >
-                      <SubtractIcon />
-                    </button>
-                    <div className="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100  px-4 py-1 select-none">
-                      <small>{item.quantity}</small>
-                    </div>
-                    <button
-                      onClick={() => addToCart(item)}
-                      className="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50  px-2 py-1 border-r border-gray-200"
-                    >
-                      <AddIcon />
-                    </button>
-                  </div>
-                  <Button
-                    background={"bg-red-500 "}
-                    hover={"hover:bg-red-600"}
-                    onClick={() => {
-                      removeFromCart(item);
-                    }}
-                    text={<ClearCartIcon className={"h-6 w-6 "} />}
-                  />
-                </div>
-              </div>
-            </li>
-          ))}
+        <ul className="flex flex-col gap-4 border-y border-solid border-[#444] py-8 my-4">
+          <Card products={cart} />
         </ul>
         {cart.length === 0 ? (
           <span className="flex items-center justify-center h-full">
@@ -101,8 +61,7 @@ const Cart = () => {
           </span>
         ) : (
           <Button
-            background={"bg-red-500 "}
-            hover={"hover:bg-red-600"}
+            background={"bg-red-500 hover:bg-red-600 "}
             onClick={() => {
               clearCart();
             }}
