@@ -11,7 +11,7 @@ const Navbar = () => {
   const { favorites } = useProducts();
   const [open, setOpen] = useState(false);
   const [favoriteCount, setFavoriteCount] = useState(0);
-
+  console.log(favorites);
   const screenWidth = useScreenWidth();
 
   const itemsNabar = [

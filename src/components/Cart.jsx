@@ -55,6 +55,35 @@ const Cart = () => {
             heightImg={"h-40 max-[400px]:h-20"}
             styles={"flex w-full"}
             products={cart}
+            renderButton={(product) => (
+              <div className="flex gap-4 max-[490px]:flex-col">
+                <div className="flex">
+                  <Button
+                    icon={<SubtractIcon />}
+                    onClick={() => subtractToCart(product)}
+                    background={
+                      "bg-white text-gray-600 hover:bg-gray-100 border border-r border-gray-200"
+                    }
+                  />
+
+                  <div className="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100  px-4 py-1 select-none">
+                    <small>{product.quantity}</small>
+                  </div>
+                  <Button
+                    icon={<AddIcon />}
+                    onClick={() => addToCart(product)}
+                    background={
+                      "bg-white text-gray-600 hover:bg-gray-100 border border-r border-gray-200"
+                    }
+                  />
+                </div>
+                <Button
+                  onClick={() => removeFromCart(product)}
+                  background={"bg-red-500 hover:bg-red-600"}
+                  icon={<ClearCartIcon className={"h-6 w-6 "} />}
+                />
+              </div>
+            )}
           />
         </div>
         {cart.length === 0 ? (
