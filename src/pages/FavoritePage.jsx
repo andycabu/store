@@ -1,5 +1,5 @@
-import Card from "../components/Card";
 import { useProducts } from "../hooks/useProduct";
+import HomePage from "./HomePage";
 
 const FavoritePage = () => {
   const { filteredProductsFav } = useProducts();
@@ -11,13 +11,7 @@ const FavoritePage = () => {
       </h1>
     </div>
   ) : (
-    <div className="grid justify-items-center grid-cols-auto-fit-minmax gap-6 p-8 ">
-      <Card
-        heightImg={"h-96"}
-        styles={"w-96 flex-col"}
-        products={filteredProductsFav}
-      />
-    </div>
+    <HomePage favorites={filteredProductsFav} />
   );
 };
 export default FavoritePage;

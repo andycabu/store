@@ -4,10 +4,12 @@ import { useProducts } from "../hooks/useProduct";
 import { FaShoppingCart } from "react-icons/fa";
 import Button from "./Button";
 import Card from "./Card";
+import { formatPrecio } from "../utilities/utilitys";
 
 const Cart = () => {
   const [check, setCheck] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const { cart, removeFromCart, addToCart, subtractToCart, clearCart } =
     useProducts();
 
@@ -21,10 +23,18 @@ const Cart = () => {
     }
   };
 
+  const { integer, decimals } = formatPrecio(totalPrice);
+
   useEffect(() => {
     const calculateTotalItems = (items) => {
       return items.reduce((sum, item) => sum + item.quantity, 0);
     };
+
+    const calculateTotalPrice = (items) => {
+      return items.reduce((sum, item) => sum + item.price, 0);
+    };
+    const totalPrice = calculateTotalPrice(cart);
+    setTotalPrice(totalPrice);
 
     const totalItems = calculateTotalItems(cart);
     setCartCount(totalItems);
@@ -49,7 +59,21 @@ const Cart = () => {
         <div onClick={changeCheck}>
           <CloseIcon className={"h-5 w-5 hover:cursor-pointer"} />
         </div>
-
+        <div className="flex flex-col">
+          <p className="flex gap-4 pt-4">
+            Subtotal
+            <span className="font-bold">
+              {integer}
+              <sup className="">{decimals}€</sup>
+            </span>
+          </p>
+          <Button
+            background={"bg-[#FFD814] hover:bg-[#F7CA00]"}
+            text={`Checkout (${cartCount} ${
+              cartCount > 1 ? "products" : "product"
+            })`}
+          />
+        </div>
         <div className="flex flex-col gap-4 border-y border-solid border-[#444] py-8 my-4 ">
           <Card
             heightImg={"h-40 max-[400px]:h-20"}
@@ -84,6 +108,7 @@ const Cart = () => {
                 />
               </div>
             )}
+            text={"flex-col"}
           />
         </div>
         {cart.length === 0 ? (

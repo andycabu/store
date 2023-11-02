@@ -1,7 +1,15 @@
 import { useProducts } from "../hooks/useProduct";
 import PropTypes from "prop-types";
+import { formatPrecio } from "../utilities/utilitys";
 
-const Card = ({ products, styles, heightImg, renderButton, renderLike }) => {
+const Card = ({
+  products,
+  styles,
+  heightImg,
+  renderButton,
+  renderLike,
+  text,
+}) => {
   const { cart } = useProducts();
 
   const checkProductInCart = (product) =>
@@ -9,6 +17,7 @@ const Card = ({ products, styles, heightImg, renderButton, renderLike }) => {
 
   return products.map((product) => {
     const isProductInCart = checkProductInCart(product);
+    const { integer, decimals } = formatPrecio(product.price);
 
     return (
       <div
@@ -24,12 +33,13 @@ const Card = ({ products, styles, heightImg, renderButton, renderLike }) => {
           />
         </div>
         <div className="flex flex-col justify-center p-6">
-          <div className="mb-2 flex items-center justify-between">
-            <p className="font-medium leading-relaxed text-blue-gray-900 antialiased truncate max-w-[200px]">
+          <div className={`${text} mb-2 flex items-center justify-between`}>
+            <p className="font-medium leading-relaxed  truncate max-w-[200px]">
               {product.title}
             </p>
-            <p className="font-medium leading-relaxed text-blue-gray-900 antialiased">
-              €{product.price}
+            <p className="font-bold leading-relaxed ">
+              {integer}
+              <sup className="">{decimals}€</sup>
             </p>
           </div>
           <div>{renderButton && renderButton(product, isProductInCart)}</div>
@@ -45,6 +55,7 @@ Card.propTypes = {
   heightImg: PropTypes.string,
   renderButton: PropTypes.func,
   renderLike: PropTypes.func,
+  text: PropTypes.string,
 };
 
 export default Card;

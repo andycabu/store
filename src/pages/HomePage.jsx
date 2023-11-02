@@ -5,7 +5,7 @@ import { AddToCartIcon, RemoveFromCartIcon } from "../components/Icon";
 import { useProducts } from "../hooks/useProduct";
 import useFavorites from "../hooks/useFavorite";
 
-const HomePage = () => {
+const HomePage = ({ favorites }) => {
   const { filteredProducts, removeFromCart, addToCart } = useProducts();
   const { likedProducts, toggleFavorite } = useFavorites();
 
@@ -36,7 +36,7 @@ const HomePage = () => {
       <Card
         heightImg={"h-96"}
         styles={"w-96 flex-col"}
-        products={filteredProducts}
+        products={favorites ? favorites : filteredProducts}
         renderButton={renderButton}
         renderLike={renderLike}
       />
