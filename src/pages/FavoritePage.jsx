@@ -11,7 +11,13 @@ const FavoritePage = () => {
       </h1>
     </div>
   ) : (
-    <Card products={filteredProductsFav} />
+    <div className="grid justify-items-center grid-cols-auto-fit-minmax gap-6 p-8 ">
+      <Card
+        heightImg={"h-96"}
+        styles={"w-96 flex-col"}
+        products={filteredProductsFav}
+      />
+    </div>
   );
 };
 export default FavoritePage;

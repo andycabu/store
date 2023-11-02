@@ -43,18 +43,20 @@ const Cart = () => {
 
       <aside
         className={`${
-          check
-            ? "right-0"
-            : "-right-1/2 max-xl:-right-[80%] max-md:-right-full"
-        } flex flex-col gap-2 bg-[var(--card-background-color)] max-xl:w-4/5 max-md:w-full  z-10  p-8 fixed  top-0 w-1/2 h-full overflow-auto transition-all duration-500`}
+          check ? "right-0" : "-right-[504px] max-md:-right-full"
+        } flex flex-col gap-2 bg-[var(--card-background-color)]  max-md:w-full  z-10  p-8 fixed  top-0 w-[504px] h-full overflow-auto transition-all duration-500`}
       >
         <div onClick={changeCheck}>
           <CloseIcon className={"h-5 w-5 hover:cursor-pointer"} />
         </div>
 
-        <ul className="flex flex-col gap-4 border-y border-solid border-[#444] py-8 my-4">
-          <Card products={cart} />
-        </ul>
+        <div className="flex flex-col gap-4 border-y border-solid border-[#444] py-8 my-4 ">
+          <Card
+            heightImg={"h-40 max-[400px]:h-20"}
+            styles={"flex w-full"}
+            products={cart}
+          />
+        </div>
         {cart.length === 0 ? (
           <span className="flex items-center justify-center h-full">
             There are no products in the cart

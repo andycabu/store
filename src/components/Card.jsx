@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import Like from "./Like";
 import { useState } from "react";
 import Button from "./Button";
-const Card = ({ products }) => {
+const Card = ({ products, styles, heightImg }) => {
   const { addToCart, cart, removeFromCart, addToFavorite } = useProducts();
   const [likedProducts, setLikedProducts] = useState(() => {
     const favoritesFromStorage =
@@ -24,7 +24,7 @@ const Card = ({ products }) => {
     return (
       <div
         key={product.id}
-        className="relative flex justify-between w-96 flex-col rounded-xl bg-[var(--card-background-color)] bg-clip-border  shadow-md"
+        className={`relative ${styles}  rounded-xl bg-[var(--card-background-color)] bg-clip-border  shadow-md  max-[400px]:text-xs`}
       >
         <div
           onClick={() => {
@@ -38,19 +38,17 @@ const Card = ({ products }) => {
         >
           <Like checked={likedProducts[product.id]} />
         </div>
-        <div className="relative m-4 h-96 overflow-hidden rounded-xl  ">
+        <div className={`${heightImg} p-4 overflow-hidden rounded-xl`}>
           <img src={product.image} className="h-full w-full object-cover" />
         </div>
-        <div className="flex flex-col justify-between p-6">
-          <div>
-            <div className="mb-2 flex items-center justify-between">
-              <p className="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
-                {product.title}
-              </p>
-              <p className="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
-                €{product.price}
-              </p>
-            </div>
+        <div className="flex flex-col justify-center p-6">
+          <div className="mb-2 flex items-center justify-between">
+            <p className="font-medium leading-relaxed text-blue-gray-900 antialiased truncate max-w-[200px]  ">
+              {product.title}
+            </p>
+            <p className="font-medium leading-relaxed text-blue-gray-900 antialiased">
+              €{product.price}
+            </p>
           </div>
           <div>
             <Button
