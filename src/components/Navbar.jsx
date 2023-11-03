@@ -87,7 +87,7 @@ const Navbar = () => {
                 <UserIcon />
               </a>
             </div>
-            <div className="flex items-center hover:text-[var(--text-color-hover)] ">
+            <div className="flex items-center ">
               <Cart />
             </div>
           </div>
