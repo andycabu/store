@@ -1,6 +1,7 @@
 import { useProducts } from "../hooks/useProduct";
 import PropTypes from "prop-types";
 import { formatPrecio } from "../utilities/utilitys";
+import { useNavigate } from "react-router-dom";
 
 const Card = ({
   products,
@@ -11,6 +12,7 @@ const Card = ({
   text,
 }) => {
   const { cart } = useProducts();
+  const navigate = useNavigate();
 
   const checkProductInCart = (product) =>
     cart.some((item) => item.id === product.id);
@@ -25,11 +27,16 @@ const Card = ({
         className={`relative ${styles} rounded-xl bg-[var(--card-background-color)] bg-clip-border shadow-md max-[400px]:text-xs`}
       >
         {renderLike && renderLike(product)}
-        <div className={`${heightImg} p-4 overflow-hidden rounded-xl`}>
+        <div
+          className={`${heightImg} p-4 overflow-hidden rounded-xl `}
+          onClick={() => {
+            navigate("/product", { state: { product } });
+          }}
+        >
           <img
             src={product.image}
             alt={product.title}
-            className="h-full w-full object-cover"
+            className="h-full w-full rounded-xl object-cover hover:cursor-pointer"
           />
         </div>
         <div className="flex flex-col justify-center p-6">

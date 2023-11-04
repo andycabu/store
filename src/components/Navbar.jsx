@@ -11,7 +11,6 @@ const Navbar = () => {
   const { favorites } = useProducts();
   const [open, setOpen] = useState(false);
   const [favoriteCount, setFavoriteCount] = useState(0);
-  console.log(favorites);
   const screenWidth = useScreenWidth();
 
   const itemsNabar = [
@@ -51,7 +50,7 @@ const Navbar = () => {
   }
   return (
     <header className="relative">
-      <nav className="flex fixed z-10 w-full max-w-[1500px] justify-between bg-[var(--card-background-color)] box-shadow-1">
+      <nav className="flex fixed z-[101] w-full max-w-[1500px] justify-between bg-[var(--card-background-color)] box-shadow-1">
         <DayNight />
         <div className="px-12 py-5 flex w-full items-center justify-between">
           <Link className="text-3xl font-bold font-heading" to={"/"}>
