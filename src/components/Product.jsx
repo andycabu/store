@@ -1,11 +1,16 @@
 import { useLocation } from "react-router-dom";
 import { formatPrecio } from "../utilities/utilitys";
 import Button from "./Button";
+import { useProducts } from "../hooks/useProduct";
+import { AddToCartIcon, RemoveFromCartIcon } from "./Icon";
 
 const Product = () => {
   const { state } = useLocation();
   const { product } = state;
   const { integer, decimals } = formatPrecio(product.price);
+  const { removeFromCart, addToCart, checkProductInCart } = useProducts();
+
+  const isProductInCart = checkProductInCart(product);
 
   return (
     <div className="max-[1500px]:px-4 max-[1500px]:pb-4 flex justify-center ">
@@ -27,7 +32,20 @@ const Product = () => {
             <p className="">{product.description}</p>
           </div>
           <div>
-            <Button text={"prueba"} />
+            <Button
+              onClick={() =>
+                isProductInCart ? removeFromCart(product) : addToCart(product)
+              }
+              background={isProductInCart ? "bg-red-500 hover:bg-red-600" : ""}
+              text={isProductInCart ? "Remove from cart" : "Add to cart"}
+              icon={
+                isProductInCart ? (
+                  <RemoveFromCartIcon className={"h-6 w-6"} />
+                ) : (
+                  <AddToCartIcon className={"h-6 w-6 "} />
+                )
+              }
+            />
           </div>
         </div>
       </div>

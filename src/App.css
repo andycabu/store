@@ -88,6 +88,8 @@ body {
   overflow-x: hidden;
   margin: auto;
   max-width: 1500px;
+  transition: all;
+  transition-duration: 500ms;
 }
 
 @layer utilities {
@@ -102,7 +104,6 @@ body {
 
 .day-night {
   cursor: pointer;
-  position: absolute;
   right: 10px;
   top: 10px;
   opacity: 1;

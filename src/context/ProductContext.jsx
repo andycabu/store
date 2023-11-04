@@ -128,6 +128,8 @@ export const ProductProvider = ({ children }) => {
       );
     });
   };
+  const checkProductInCart = (product) =>
+    cart.some((item) => item.id === product.id);
   const filteredProducts = filterProducts(products || []);
   const filteredProductsFav = filterProducts(favorites || []);
   useEffect(() => {
@@ -141,6 +143,7 @@ export const ProductProvider = ({ children }) => {
       value={{
         filteredProducts,
         filteredProductsFav,
+        checkProductInCart,
         getProducts,
         setFilters,
         addToFavorite,

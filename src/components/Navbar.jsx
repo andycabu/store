@@ -51,8 +51,10 @@ const Navbar = () => {
   return (
     <header className="relative">
       <nav className="flex fixed z-[101] w-full max-w-[1500px] justify-between bg-[var(--card-background-color)] box-shadow-1">
-        <DayNight />
-        <div className="px-12 py-5 flex w-full items-center justify-between">
+        <div className="max-md:hidden">
+          <DayNight position={"absolute"} />
+        </div>
+        <div className="px-12 max-md:px-4 py-5 flex w-full items-center justify-between">
           <Link className="text-3xl font-bold font-heading" to={"/"}>
             <img className="h-12 rounded-full" src={logo} alt="" />
           </Link>
@@ -82,7 +84,7 @@ const Navbar = () => {
                   </span>
                 )}
               </Link>
-              <a className="hover:text-[var(--text-color-hover)] " href="#">
+              <a className="hover:text-[var(--text-color-hover)] max-md:hidden">
                 <UserIcon />
               </a>
             </div>
@@ -114,6 +116,12 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
+          <div className="flex justify-center gap-8">
+            <DayNight />
+            <Link className="hover:text-[var(--text-color-hover)]">
+              <UserIcon />
+            </Link>
+          </div>
         </aside>
       </nav>
     </header>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-function DayNight() {
+function DayNight({ position }) {
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
@@ -24,11 +25,14 @@ function DayNight() {
   }
 
   return (
-    <label className="day-night z-10">
+    <label className={`day-night z-10 ${position}`}>
       <input onClick={changeTheme} type="checkbox" checked={theme === "dark"} />
       <div></div>
     </label>
   );
 }
+DayNight.propTypes = {
+  position: PropTypes.string,
+};
 
 export default DayNight;

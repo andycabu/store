@@ -11,11 +11,8 @@ const Card = ({
   renderLike,
   text,
 }) => {
-  const { cart } = useProducts();
+  const { checkProductInCart } = useProducts();
   const navigate = useNavigate();
-
-  const checkProductInCart = (product) =>
-    cart.some((item) => item.id === product.id);
 
   return products.map((product) => {
     const isProductInCart = checkProductInCart(product);
