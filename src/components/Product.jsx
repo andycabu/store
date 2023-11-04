@@ -1,13 +1,15 @@
 import { useLocation } from "react-router-dom";
-import Button from "./Button";
 import { formatPrecio } from "../utilities/utilitys";
+import Button from "./Button";
 
 const Product = () => {
   const { state } = useLocation();
   const { product } = state;
   const { integer, decimals } = formatPrecio(product.price);
+  console.log(product);
+
   return (
-    <div className="fixed top-0 max-[1075px]:p-4 left-0 w-full h-full bg-[rgba(0, 0, 0, 0.5)] flex items-center justify-center z-[100]">
+    <div className="max-[1500px]:px-4 max-[1500px]:pb-4  ">
       <div className="flex max-[480px]:flex-col  rounded-xl bg-[var(--card-background-color)] bg-clip-border shadow-md max-[400px]:text-xs">
         <div className="p-4 overflow-hidden rounded-xl">
           <img
