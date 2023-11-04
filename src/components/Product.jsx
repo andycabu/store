@@ -6,10 +6,9 @@ const Product = () => {
   const { state } = useLocation();
   const { product } = state;
   const { integer, decimals } = formatPrecio(product.price);
-  console.log(product);
 
   return (
-    <div className="max-[1500px]:px-4 max-[1500px]:pb-4  ">
+    <div className="max-[1500px]:px-4 max-[1500px]:pb-4 flex justify-center ">
       <div className="flex max-[480px]:flex-col  rounded-xl bg-[var(--card-background-color)] bg-clip-border shadow-md max-[400px]:text-xs">
         <div className="p-4 overflow-hidden rounded-xl">
           <img
