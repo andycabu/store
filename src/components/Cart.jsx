@@ -5,6 +5,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import Button from "./Button";
 import Card from "./Card";
 import { formatPrecio } from "../utilities/utilitys";
+import { useScreenWidth } from "../hooks/useScreenWidth";
 
 const Cart = () => {
   const [check, setCheck] = useState(false);
@@ -13,6 +14,7 @@ const Cart = () => {
   const { cart, removeFromCart, addToCart, subtractToCart, clearCart } =
     useProducts();
 
+  const screenWidth = useScreenWidth();
   const changeCheck = () => {
     if (check) {
       document.body.style.overflow = "";
@@ -26,13 +28,26 @@ const Cart = () => {
   const { integer, decimals } = formatPrecio(totalPrice);
 
   useEffect(() => {
+    if (check) {
+      document.body.style.overflow = "";
+      setCheck(false);
+    }
+  }, [screenWidth]);
+
+  console.log(cart);
+  useEffect(() => {
     const calculateTotalItems = (items) => {
       return items.reduce((sum, item) => sum + item.quantity, 0);
     };
 
     const calculateTotalPrice = (items) => {
-      return items.reduce((sum, item) => sum + item.price, 0);
+      const total = items.reduce(
+        (sum, item) => sum + item.quantity * item.price,
+        0
+      );
+      return parseFloat(total.toFixed(2));
     };
+
     const totalPrice = calculateTotalPrice(cart);
     setTotalPrice(totalPrice);
 
@@ -80,17 +95,27 @@ const Cart = () => {
             </div>
             <div className="flex flex-col gap-4 border-y border-solid border-[#444] py-8 my-4 ">
               <Card
-                heightImg={"h-40 max-[400px]:h-20"}
-                styles={"flex w-full"}
+                heightAndWidthImg={"h-40  w-80  max-[490px]:h-48 "}
+                styles={
+                  "flex w-full max-[400px]:flex-col max-[400px]:items-center"
+                }
                 products={cart}
                 renderButton={(product) => (
                   <div className="flex gap-4 max-[490px]:flex-col">
                     <div className="flex gap-1">
-                      <Button
-                        icon={<SubtractIcon />}
-                        onClick={() => subtractToCart(product)}
-                        background={"bg-red-500 hover:bg-red-600"}
-                      />
+                      {product.quantity === 1 ? (
+                        <Button
+                          onClick={() => removeFromCart(product)}
+                          background={"bg-red-500 hover:bg-red-600"}
+                          icon={<ClearCartIcon className={"h-6 w-6 "} />}
+                        />
+                      ) : (
+                        <Button
+                          icon={<SubtractIcon />}
+                          onClick={() => subtractToCart(product)}
+                          background={"bg-red-500 hover:bg-red-600"}
+                        />
+                      )}
 
                       <div className="bg-[var(--background-color)] rounded  py-2 px-4     select-none">
                         <small>{product.quantity}</small>
@@ -100,11 +125,13 @@ const Cart = () => {
                         onClick={() => addToCart(product)}
                       />
                     </div>
-                    <Button
-                      onClick={() => removeFromCart(product)}
-                      background={"bg-red-500 hover:bg-red-600"}
-                      icon={<ClearCartIcon className={"h-6 w-6 "} />}
-                    />
+                    {product.quantity > 1 && (
+                      <Button
+                        onClick={() => removeFromCart(product)}
+                        background={"bg-red-500 hover:bg-red-600"}
+                        icon={<ClearCartIcon className={"h-6 w-6 "} />}
+                      />
+                    )}
                   </div>
                 )}
                 text={"flex-col"}

@@ -2,16 +2,12 @@ import PropTypes from "prop-types";
 import { useTheme } from "../hooks/useTheme";
 
 function DayNight({ position }) {
-  const { changeTheme, theme } = useTheme();
-
-  const handleToggle = () => {
-    changeTheme(); //
-  };
+  const { theme, changeTheme } = useTheme();
 
   return (
     <label className={`day-night z-10 ${position}`}>
       <input
-        onChange={handleToggle}
+        onChange={changeTheme}
         type="checkbox"
         checked={theme === "dark"}
       />

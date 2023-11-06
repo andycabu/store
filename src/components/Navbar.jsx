@@ -33,9 +33,10 @@ const Navbar = () => {
   }, [favorites]);
 
   useEffect(() => {
-    if (screenWidth > 768) {
+    if (screenWidth > 768 && open) {
       document.body.style.overflow = "";
       setOpen(false);
+      console.log("prueba");
     }
   }, [screenWidth]);
 

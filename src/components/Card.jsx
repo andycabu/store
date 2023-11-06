@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Card = ({
   products,
   styles,
-  heightImg,
+  heightAndWidthImg,
   renderButton,
   renderLike,
   text,
@@ -25,7 +25,7 @@ const Card = ({
       >
         {renderLike && renderLike(product)}
         <div
-          className={`${heightImg} p-4 overflow-hidden rounded-xl `}
+          className={`${heightAndWidthImg} max-[490px]:p-0 p-4 rounded-xl `}
           onClick={() => {
             navigate("/product", { state: { product } });
           }}
@@ -36,9 +36,9 @@ const Card = ({
             className="h-full w-full rounded-xl object-cover hover:cursor-pointer"
           />
         </div>
-        <div className="flex flex-col justify-center p-6">
+        <div className="flex flex-col justify-center w-full items-center p-6">
           <div className={`${text} mb-2 flex items-center justify-between`}>
-            <p className="font-medium leading-relaxed  truncate max-w-[200px]">
+            <p className="font-medium leading-relaxed  truncate max-w-[200px] max-[490px]:max-w-[140px]">
               {product.title}
             </p>
             <p className="font-bold leading-relaxed ">
@@ -56,7 +56,7 @@ const Card = ({
 Card.propTypes = {
   products: PropTypes.array.isRequired,
   styles: PropTypes.string,
-  heightImg: PropTypes.string,
+  heightAndWidthImg: PropTypes.string,
   renderButton: PropTypes.func,
   renderLike: PropTypes.func,
   text: PropTypes.string,
