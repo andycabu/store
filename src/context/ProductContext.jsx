@@ -57,7 +57,7 @@ const reducer = (cart, action) => {
       return newState;
     }
     case "CLEAR_CART": {
-      updateToLocalStorage([]); // Esto actualizará localStorage
+      updateToLocalStorage([]);
       return [];
     }
   }
@@ -67,6 +67,8 @@ const reducer = (cart, action) => {
 export const ProductProvider = ({ children }) => {
   const [cart, dispatch] = useReducer(reducer, initialState);
   const url = "https://fakestoreapi.com/products";
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
 
   const [products, setProducts] = useState();
   const [filters, setFilters] = useState({
@@ -137,6 +139,25 @@ export const ProductProvider = ({ children }) => {
       getProducts();
     }
   }, []);
+  useEffect(() => {
+    const calculateTotalItems = (items) => {
+      return items.reduce((sum, item) => sum + item.quantity, 0);
+    };
+
+    const calculateTotalPrice = (items) => {
+      const total = items.reduce(
+        (sum, item) => sum + item.quantity * item.price,
+        0
+      );
+      return parseFloat(total.toFixed(2));
+    };
+
+    const totalPrice = calculateTotalPrice(cart);
+    setTotalPrice(totalPrice);
+
+    const totalItems = calculateTotalItems(cart);
+    setCartCount(totalItems);
+  }, [cart]);
 
   return (
     <ProductContext.Provider
@@ -145,9 +166,11 @@ export const ProductProvider = ({ children }) => {
         filteredProductsFav,
         checkProductInCart,
         getProducts,
+        cartCount,
         setFilters,
         addToFavorite,
         filters,
+        totalPrice,
         addToCart,
         clearCart,
         cart,
