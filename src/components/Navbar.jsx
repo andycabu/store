@@ -1,4 +1,4 @@
-import {  HeartIcon, MenuIcon, UserIcon } from "./Icon";
+import { HeartIcon, MenuIcon, UserIcon } from "./Icon";
 import logo from "../assets/img/logo.png";
 import { Link } from "react-router-dom";
 import DayNight from "./DayNight";
@@ -11,7 +11,7 @@ import { useAside } from "../hooks/useAside";
 const Navbar = () => {
   const { favorites, cartCount } = useProducts();
   const [favoriteCount, setFavoriteCount] = useState(0);
-  const {toggleAside}=useAside()
+  const { toggleAside } = useAside();
 
   const itemsNabar = [
     {
@@ -31,7 +31,6 @@ const Navbar = () => {
   useEffect(() => {
     setFavoriteCount(favorites.length);
   }, [favorites]);
-
 
   return (
     <>
@@ -74,7 +73,10 @@ const Navbar = () => {
                   <UserIcon />
                 </a>
               </div>
-              <div onClick={()=>toggleAside("aside2")} className="relative cursor-pointer" >
+              <div
+                onClick={() => toggleAside("aside2")}
+                className="relative cursor-pointer"
+              >
                 <FaShoppingCart
                   className={"h-6 w-6 hover:text-[var(--text-color-hover)] "}
                 />
@@ -87,7 +89,7 @@ const Navbar = () => {
             </div>
           </div>
           <div
-            onClick={()=>toggleAside("aside1")}
+            onClick={() => toggleAside("aside1")}
             className="navbar-burger self-center mr-4 md:hidden hover:text-[var(--text-color-hover)]"
           >
             <MenuIcon />

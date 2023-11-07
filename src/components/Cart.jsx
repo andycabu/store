@@ -1,4 +1,4 @@
-import { AddIcon, ClearCartIcon,  SubtractIcon } from "./Icon";
+import { AddIcon, ClearCartIcon, SubtractIcon } from "./Icon";
 import { useProducts } from "../hooks/useProduct";
 import Button from "./Button";
 import Card from "./Card";
@@ -15,15 +15,11 @@ const Cart = () => {
     totalPrice,
     cartCount,
   } = useProducts();
- 
+
   const { integer, decimals } = formatPrecio(totalPrice);
 
- 
-
   return (
-    <Aside
-     id="aside2"
-    >
+    <Aside id="aside2">
       {cart.length >= 1 && (
         <div>
           <div className="flex flex-col">

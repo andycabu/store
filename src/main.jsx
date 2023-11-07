@@ -8,7 +8,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <ProductProvider>
     <ThemeProvider>
       <AsideProvider>
-      <App />
+        <App />
       </AsideProvider>
     </ThemeProvider>
   </ProductProvider>

@@ -12,7 +12,7 @@ function App() {
     <>
       <BrowserRouter>
         <Navbar />
-        <Cart/>
+        <Cart />
         <main className="pt-28">
           <Routes>
             <Route path="/" element={<HomePage />} />
