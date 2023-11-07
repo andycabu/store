@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
-import { AddIcon, ClearCartIcon, CloseIcon, SubtractIcon } from "./Icon";
+import { AddIcon, ClearCartIcon,  SubtractIcon } from "./Icon";
 import { useProducts } from "../hooks/useProduct";
 import Button from "./Button";
 import Card from "./Card";
 import { formatPrecio } from "../utilities/utilitys";
-import { useScreenWidth } from "../hooks/useScreenWidth";
 import Aside from "./Aside";
 
 const Cart = () => {
-  const [check, setCheck] = useState(false);
   const {
     cart,
     removeFromCart,
@@ -18,35 +15,15 @@ const Cart = () => {
     totalPrice,
     cartCount,
   } = useProducts();
-  const screenWidth = useScreenWidth();
+ 
   const { integer, decimals } = formatPrecio(totalPrice);
 
-  const changeCheck = () => {
-    if (check) {
-      document.body.style.overflow = "";
-      setCheck(false);
-    } else {
-      document.body.style.overflow = "hidden";
-      setCheck(true);
-    }
-  };
-
-  useEffect(() => {
-    if (check) {
-      document.body.style.overflow = "";
-      setCheck(false);
-    }
-  }, [screenWidth]);
+ 
 
   return (
     <Aside
-      className={`${
-        check ? "right-0" : "-right-[504px] max-md:w-full  max-md:-right-full"
-      } `}
+     id="aside2"
     >
-      <div onClick={changeCheck}>
-        <CloseIcon className={"h-5 w-5 hover:cursor-pointer"} />
-      </div>
       {cart.length >= 1 && (
         <div>
           <div className="flex flex-col">

@@ -5,12 +5,14 @@ import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import FavoritePage from "./pages/FavoritePage";
 import Product from "./components/Product";
+import Cart from "./components/Cart";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Navbar />
+        <Cart/>
         <main className="pt-28">
           <Routes>
             <Route path="/" element={<HomePage />} />

@@ -1,19 +1,17 @@
-import { CloseIcon, HeartIcon, MenuIcon, UserIcon } from "./Icon";
-import Cart from "./Cart";
+import {  HeartIcon, MenuIcon, UserIcon } from "./Icon";
 import logo from "../assets/img/logo.png";
 import { Link } from "react-router-dom";
-import { useScreenWidth } from "../hooks/useScreenWidth";
 import DayNight from "./DayNight";
 import { useEffect, useState } from "react";
 import { useProducts } from "../hooks/useProduct";
 import { FaShoppingCart } from "react-icons/fa";
 import Aside from "./Aside";
+import { useAside } from "../hooks/useAside";
 
 const Navbar = () => {
   const { favorites, cartCount } = useProducts();
-  const [open, setOpen] = useState(false);
   const [favoriteCount, setFavoriteCount] = useState(0);
-  const screenWidth = useScreenWidth();
+  const {toggleAside}=useAside()
 
   const itemsNabar = [
     {
@@ -34,23 +32,7 @@ const Navbar = () => {
     setFavoriteCount(favorites.length);
   }, [favorites]);
 
-  useEffect(() => {
-    if (screenWidth > 768 && open) {
-      document.body.style.overflow = "";
-      setOpen(false);
-      console.log("prueba");
-    }
-  }, [screenWidth]);
 
-  function openMenu() {
-    if (open) {
-      document.body.style.overflow = "";
-      setOpen(false);
-    } else {
-      document.body.style.overflow = "hidden";
-      setOpen(true);
-    }
-  }
   return (
     <>
       <header className="relative">
@@ -92,7 +74,7 @@ const Navbar = () => {
                   <UserIcon />
                 </a>
               </div>
-              <div className="relative cursor-pointer" onClick={open}>
+              <div onClick={()=>toggleAside("aside2")} className="relative cursor-pointer" >
                 <FaShoppingCart
                   className={"h-6 w-6 hover:text-[var(--text-color-hover)] "}
                 />
@@ -104,19 +86,15 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-
           <div
-            onClick={openMenu}
-            className="navbar-burger self-center mr-12 md:hidden hover:text-[var(--text-color-hover)]"
+            onClick={()=>toggleAside("aside1")}
+            className="navbar-burger self-center mr-4 md:hidden hover:text-[var(--text-color-hover)]"
           >
             <MenuIcon />
           </div>
         </nav>
       </header>
-      <Aside className={open ? "left-0" : "-left-1/2 max-[480px]:-left-full"}>
-        <div onClick={openMenu}>
-          <CloseIcon className={"h-5 w-5 hover:cursor-pointer"} />
-        </div>
+      <Aside id={"aside1"}>
         <ul className="flex flex-col h-full items-center justify-center gap-8">
           {itemsNabar.map((item) => (
             <li key={item.id} className="border-b border-solid border-[#444]">
