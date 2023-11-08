@@ -49,6 +49,7 @@ const ItemListContainer = ({ favorites, filters }) => {
   );
 };
 ItemListContainer.propTypes = {
-  favorites: PropTypes.any,
+  favorites: PropTypes.array,
+  filters: PropTypes.array,
 };
 export default ItemListContainer;
