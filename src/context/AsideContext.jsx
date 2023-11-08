@@ -12,7 +12,6 @@ export const AsideProvider = ({ children }) => {
     if (openAside) {
       document.body.style.overflow = "";
       setOpenAside();
-      console.log("prueba");
     }
   }, [screenWidth]);
 

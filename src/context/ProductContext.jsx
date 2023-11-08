@@ -72,7 +72,7 @@ export const ProductProvider = ({ children }) => {
 
   const [products, setProducts] = useState();
   const [filters, setFilters] = useState({
-    category: "all",
+    category: "all categories",
     minPrice: 0,
   });
   const [favorites, setFavorites] = useState(() => {
@@ -126,7 +126,8 @@ export const ProductProvider = ({ children }) => {
     return products.filter((product) => {
       return (
         product.price >= filters.minPrice &&
-        (filters.category === "all" || product.category === filters.category)
+        (filters.category === "all categories" ||
+          product.category === filters.category)
       );
     });
   };

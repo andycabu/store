@@ -4,8 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import FavoritePage from "./pages/FavoritePage";
-import Product from "./components/Product";
 import Cart from "./components/Cart";
+import ProductPage from "./pages/ProductPage";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/favorites" element={<FavoritePage />} />
-            <Route path="/product" element={<Product />} />
+            <Route path="/product" element={<ProductPage />} />
           </Routes>
         </main>
       </BrowserRouter>

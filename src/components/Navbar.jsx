@@ -7,6 +7,7 @@ import { useProducts } from "../hooks/useProduct";
 import { FaShoppingCart } from "react-icons/fa";
 import Aside from "./Aside";
 import { useAside } from "../hooks/useAside";
+import Dropdown from "./Dropdown";
 
 const Navbar = () => {
   const { favorites, cartCount } = useProducts();
@@ -21,11 +22,12 @@ const Navbar = () => {
     },
     {
       id: 2,
-      text: "Category",
+      dropdown: <Dropdown />,
     },
     {
       id: 3,
       text: "Contact us",
+      link: "/contact",
     },
   ];
   useEffect(() => {
@@ -43,7 +45,7 @@ const Navbar = () => {
             <Link className="text-3xl font-bold font-heading" to={"/"}>
               <img className="h-12 rounded-full" src={logo} alt="" />
             </Link>
-            <ul className="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
+            <ul className="hidden md:flex px-4 mx-auto items-center font-semibold font-heading space-x-12">
               {itemsNabar.map((item) => (
                 <li key={item.id}>
                   <Link
@@ -52,6 +54,8 @@ const Navbar = () => {
                   >
                     {item.text}
                   </Link>
+                  {item.arrow}
+                  {item.dropdown}
                 </li>
               ))}
             </ul>
@@ -101,6 +105,8 @@ const Navbar = () => {
           {itemsNabar.map((item) => (
             <li key={item.id} className="border-b border-solid border-[#444]">
               <Link to={item.link}>{item.text}</Link>
+              {item.arrow}
+              {item.dropdown}
             </li>
           ))}
         </ul>
