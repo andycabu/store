@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect, useReducer } from "react";
-
 import PropTypes from "prop-types";
 
 export const ProductContext = createContext();
@@ -52,7 +51,6 @@ const reducer = (cart, action) => {
     // eslint-disable-next-line no-fallthrough
     case "REMOVE_FROM_CART": {
       const newState = cart.filter((item) => item.id !== id);
-
       updateToLocalStorage(newState);
       return newState;
     }
@@ -69,13 +67,7 @@ export const ProductProvider = ({ children }) => {
   const url = "https://fakestoreapi.com/products";
   const [totalPrice, setTotalPrice] = useState(0);
   const [cartCount, setCartCount] = useState(0);
-
   const [products, setProducts] = useState([]);
-  const [filters, setFilters] = useState({
-    category: "all categories",
-    minPrice: 0,
-    title: "",
-  });
   const [favorites, setFavorites] = useState(() => {
     const savedFavorites = window.localStorage.getItem("favorites");
     return savedFavorites ? JSON.parse(savedFavorites) : [];
@@ -124,21 +116,8 @@ export const ProductProvider = ({ children }) => {
     });
   };
 
-  const filterProducts = (products) => {
-    return products.filter((product) => {
-      return (
-        product.price >= filters.minPrice &&
-        (filters.category === "all categories" ||
-          product.category === filters.category) &&
-        product.title.toLowerCase().includes(filters.title.toLowerCase())
-      );
-    });
-  };
-
   const checkProductInCart = (product) =>
     cart.some((item) => item.id === product.id);
-  const filteredProducts = filterProducts(products || []);
-  const filteredProductsFav = filterProducts(favorites || []);
 
   useEffect(() => {
     if (products.length < 1) {
@@ -169,14 +148,10 @@ export const ProductProvider = ({ children }) => {
     <ProductContext.Provider
       value={{
         products,
-        filteredProducts,
-        filteredProductsFav,
         checkProductInCart,
         getProducts,
         cartCount,
-        setFilters,
         addToFavorite,
-        filters,
         totalPrice,
         addToCart,
         clearCart,
