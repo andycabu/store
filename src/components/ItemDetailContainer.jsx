@@ -1,12 +1,12 @@
 import { useLocation } from "react-router-dom";
 import { formatPrecio } from "../utilities/utilitys";
-import Button from "../components/Button";
+import Button from "./Button";
 import { useProducts } from "../hooks/useProduct";
-import { AddToCartIcon, RemoveFromCartIcon } from "../components/Icon";
-import Like from "../components/Like";
+import { AddToCartIcon, RemoveFromCartIcon } from "./Icon";
+import Like from "./Like";
 import useFavorites from "../hooks/useFavorite";
 
-const ProductPage = () => {
+const ItemDetailContainer = () => {
   const { state } = useLocation();
   const { product } = state;
   const { integer, decimals } = formatPrecio(product.price);
@@ -59,4 +59,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default ItemDetailContainer;

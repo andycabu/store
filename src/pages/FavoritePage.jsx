@@ -1,5 +1,5 @@
 import { useProducts } from "../hooks/useProduct";
-import HomePage from "./HomePage";
+import ItemListContainer from "../components/ItemListContainer";
 
 const FavoritePage = () => {
   const { filteredProductsFav } = useProducts();
@@ -11,7 +11,7 @@ const FavoritePage = () => {
       </h1>
     </div>
   ) : (
-    <HomePage favorites={filteredProductsFav} />
+    <ItemListContainer favorites={filteredProductsFav} />
   );
 };
 export default FavoritePage;

@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import DayNight from "./DayNight";
 import { useEffect, useState } from "react";
 import { useProducts } from "../hooks/useProduct";
-import { FaShoppingCart } from "react-icons/fa";
 import Aside from "./Aside";
 import { useAside } from "../hooks/useAside";
 import Dropdown from "./Dropdown";
+import CartWidget from "./CartWidget";
 
 const Navbar = () => {
   const { favorites, cartCount } = useProducts();
@@ -81,9 +81,7 @@ const Navbar = () => {
                 onClick={() => toggleAside("aside2")}
                 className="relative cursor-pointer"
               >
-                <FaShoppingCart
-                  className={"h-6 w-6 hover:text-[var(--text-color-hover)] "}
-                />
+                <CartWidget />
                 {cartCount > 0 && (
                   <span className="absolute -top-[10px] -right-[10px] bg-red-500 text-white rounded-[50%] w-[15px] h-[15px] flex justify-center items-center text-[10px] p-1">
                     {cartCount}

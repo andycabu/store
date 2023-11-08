@@ -27,7 +27,7 @@ const Card = ({
         <div
           className={`${heightAndWidthImg} max-[490px]:p-0 p-4 rounded-xl `}
           onClick={() => {
-            navigate("/product", { state: { product } });
+            navigate(`/item/${product.id}`, { state: { product } });
           }}
         >
           <img
@@ -37,7 +37,9 @@ const Card = ({
           />
         </div>
         <div className="flex flex-col justify-center w-full items-center p-6">
-          <div className={`${text} mb-2 flex items-center justify-between`}>
+          <div
+            className={`${text} mb-2 flex items-center gap-4 justify-between`}
+          >
             <p className="font-medium leading-relaxed  truncate max-w-[200px] max-[490px]:max-w-[140px]">
               {product.title}
             </p>

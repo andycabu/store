@@ -70,7 +70,7 @@ export const ProductProvider = ({ children }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [cartCount, setCartCount] = useState(0);
 
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState({
     category: "all categories",
     minPrice: 0,
@@ -82,6 +82,11 @@ export const ProductProvider = ({ children }) => {
   });
   const updateToLocalStorage = (state) => {
     window.localStorage.setItem("favorites", JSON.stringify(state));
+  };
+  const getProducts = async () => {
+    const res = await fetch(url);
+    const data = await res.json();
+    setProducts(data);
   };
 
   const addToCart = (product) =>
@@ -118,11 +123,7 @@ export const ProductProvider = ({ children }) => {
       return newFavorites;
     });
   };
-  const getProducts = async () => {
-    const res = await fetch(url);
-    const data = await res.json();
-    setProducts(data);
-  };
+
   const filterProducts = (products) => {
     return products.filter((product) => {
       return (
@@ -133,12 +134,14 @@ export const ProductProvider = ({ children }) => {
       );
     });
   };
+
   const checkProductInCart = (product) =>
     cart.some((item) => item.id === product.id);
   const filteredProducts = filterProducts(products || []);
   const filteredProductsFav = filterProducts(favorites || []);
+
   useEffect(() => {
-    if (!products) {
+    if (products.length < 1) {
       getProducts();
     }
   }, []);
@@ -165,6 +168,7 @@ export const ProductProvider = ({ children }) => {
   return (
     <ProductContext.Provider
       value={{
+        products,
         filteredProducts,
         filteredProductsFav,
         checkProductInCart,

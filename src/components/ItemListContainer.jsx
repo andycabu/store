@@ -1,14 +1,14 @@
-import Button from "../components/Button";
-import Card from "../components/Card";
-import Like from "../components/Like";
+import Button from "./Button";
+import Card from "./Card";
+import Like from "./Like";
 import PropTypes from "prop-types";
-import { AddToCartIcon, RemoveFromCartIcon } from "../components/Icon";
+import { AddToCartIcon, RemoveFromCartIcon } from "./Icon";
 import { useProducts } from "../hooks/useProduct";
 import useFavorites from "../hooks/useFavorite";
-import Filters from "../components/Filters";
+import Filters from "./Filters";
 
-const HomePage = ({ favorites }) => {
-  const { filteredProducts, removeFromCart, addToCart } = useProducts();
+const ItemListContainer = ({ favorites, filters }) => {
+  const { products, removeFromCart, addToCart } = useProducts();
   const { likedProducts, toggleFavorite } = useFavorites();
 
   const renderButton = (product, isProductInCart) => (
@@ -40,7 +40,7 @@ const HomePage = ({ favorites }) => {
         <Card
           heightAndWidthImg={"h-96"}
           styles={"w-96 max-[400px]:w-72 flex-col"}
-          products={favorites ? favorites : filteredProducts}
+          products={favorites || filters ? favorites || filters : products}
           renderButton={renderButton}
           renderLike={renderLike}
         />
@@ -48,7 +48,7 @@ const HomePage = ({ favorites }) => {
     </>
   );
 };
-HomePage.propTypes = {
+ItemListContainer.propTypes = {
   favorites: PropTypes.any,
 };
-export default HomePage;
+export default ItemListContainer;

@@ -11,7 +11,6 @@ const Filters = () => {
       minPrice: e.target.value,
     }));
   };
-
   const handleChangeProduct = (e) => {
     setFilters((prevState) => ({
       ...prevState,
