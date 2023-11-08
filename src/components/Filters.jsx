@@ -33,7 +33,7 @@ const Filters = () => {
       </div>
       <div>
         <label className="pr-4" htmlFor="">
-          Buscar:
+          search:
         </label>
         <input
           onChange={handleChangeProduct}
