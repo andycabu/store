@@ -74,6 +74,7 @@ export const ProductProvider = ({ children }) => {
   const [filters, setFilters] = useState({
     category: "all categories",
     minPrice: 0,
+    title: "",
   });
   const [favorites, setFavorites] = useState(() => {
     const savedFavorites = window.localStorage.getItem("favorites");
@@ -127,7 +128,8 @@ export const ProductProvider = ({ children }) => {
       return (
         product.price >= filters.minPrice &&
         (filters.category === "all categories" ||
-          product.category === filters.category)
+          product.category === filters.category) &&
+        product.title.toLowerCase().includes(filters.title.toLowerCase())
       );
     });
   };

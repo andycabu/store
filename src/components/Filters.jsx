@@ -12,8 +12,14 @@ const Filters = () => {
     }));
   };
 
+  const handleChangeProduct = (e) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      title: e.target.value,
+    }));
+  };
   return (
-    <section className="flex justify-around max-[480px]:flex-col max-[480px]:gap-4 items-center p-4">
+    <section className="flex justify-around max-[590px]:flex-col max-[590px]:gap-4 items-center p-4">
       <div className="flex gap-4">
         <label htmlFor={minPriceFilterId}>Price from: </label>
         <input
@@ -25,6 +31,16 @@ const Filters = () => {
           value={filters.minPrice}
         />
         <span>€{filters.minPrice}</span>
+      </div>
+      <div>
+        <label className="pr-4" htmlFor="">
+          Buscar:
+        </label>
+        <input
+          onChange={handleChangeProduct}
+          className="bg-[var(--card-border-color)] rounded-md"
+          type="text"
+        />
       </div>
     </section>
   );
