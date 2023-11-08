@@ -1,19 +1,21 @@
 import { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useScreenWidth } from "../hooks/useScreenWidth";
+import { useLocation } from "react-router-dom";
 
 export const AsideContext = createContext();
 
 export const AsideProvider = ({ children }) => {
   const [openAside, setOpenAside] = useState(null);
   const screenWidth = useScreenWidth();
+  const location = useLocation();
 
   useEffect(() => {
     if (openAside) {
       document.body.style.overflow = "";
       setOpenAside();
     }
-  }, [screenWidth]);
+  }, [screenWidth, location]);
 
   const toggleAside = (asideId) => {
     if (openAside) {
@@ -26,7 +28,7 @@ export const AsideProvider = ({ children }) => {
   };
 
   return (
-    <AsideContext.Provider value={{ openAside, toggleAside }}>
+    <AsideContext.Provider value={{ openAside, toggleAside, setOpenAside }}>
       {children}
     </AsideContext.Provider>
   );
