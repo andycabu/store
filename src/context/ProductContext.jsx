@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useReducer } from "react";
+
 import PropTypes from "prop-types";
 
 export const ProductContext = createContext();
@@ -51,6 +52,7 @@ const reducer = (cart, action) => {
     // eslint-disable-next-line no-fallthrough
     case "REMOVE_FROM_CART": {
       const newState = cart.filter((item) => item.id !== id);
+
       updateToLocalStorage(newState);
       return newState;
     }
@@ -67,7 +69,13 @@ export const ProductProvider = ({ children }) => {
   const url = "https://fakestoreapi.com/products";
   const [totalPrice, setTotalPrice] = useState(0);
   const [cartCount, setCartCount] = useState(0);
+
   const [products, setProducts] = useState([]);
+  const [filters, setFilters] = useState({
+    category: "all categories",
+    minPrice: 0,
+    title: "",
+  });
   const [favorites, setFavorites] = useState(() => {
     const savedFavorites = window.localStorage.getItem("favorites");
     return savedFavorites ? JSON.parse(savedFavorites) : [];
@@ -119,6 +127,11 @@ export const ProductProvider = ({ children }) => {
   const checkProductInCart = (product) =>
     cart.some((item) => item.id === product.id);
 
+  const getQuantity = (productId) => {
+    const item = cart.find((item) => item.id === productId);
+    return item ? item.quantity : 0;
+  };
+
   useEffect(() => {
     if (products.length < 1) {
       getProducts();
@@ -151,10 +164,13 @@ export const ProductProvider = ({ children }) => {
         checkProductInCart,
         getProducts,
         cartCount,
+        setFilters,
         addToFavorite,
+        filters,
         totalPrice,
         addToCart,
         clearCart,
+        getQuantity,
         cart,
         favorites,
         removeFromCart,

@@ -1,17 +1,9 @@
-import { useProducts } from "../hooks/useProduct";
 import ItemListContainer from "../components/ItemListContainer";
+import { useFilters } from "../hooks/useFilters";
 
 const FavoritePage = () => {
-  const { filteredProductsFav } = useProducts();
+  const { filteredFavorites } = useFilters();
 
-  return filteredProductsFav.length === 0 ? (
-    <div className="flex justify-center items-center ">
-      <h1 className="font-bold text-5xl pt-8">
-        There are no favorite products
-      </h1>
-    </div>
-  ) : (
-    <ItemListContainer favorites={filteredProductsFav} />
-  );
+  return <ItemListContainer favorites={filteredFavorites} />;
 };
 export default FavoritePage;

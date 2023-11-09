@@ -6,9 +6,11 @@ import { AddToCartIcon, RemoveFromCartIcon } from "./Icon";
 import { useProducts } from "../hooks/useProduct";
 import useFavorites from "../hooks/useFavorite";
 import Filters from "./Filters";
+import { useFilters } from "../hooks/useFilters";
 
-const ItemListContainer = ({ favorites, filters }) => {
-  const { products, removeFromCart, addToCart } = useProducts();
+const ItemListContainer = ({ favorites }) => {
+  const { removeFromCart, addToCart } = useProducts();
+  const { filteredProducts } = useFilters();
   const { likedProducts, toggleFavorite } = useFavorites();
 
   const renderButton = (product, isProductInCart) => (
@@ -40,7 +42,7 @@ const ItemListContainer = ({ favorites, filters }) => {
         <Card
           heightAndWidthImg={"h-96"}
           styles={"w-96 max-[400px]:w-72 flex-col"}
-          products={favorites || filters ? favorites || filters : products}
+          products={favorites ? favorites : filteredProducts}
           renderButton={renderButton}
           renderLike={renderLike}
         />

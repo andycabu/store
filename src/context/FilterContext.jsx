@@ -1,26 +1,59 @@
 import { createContext, useState } from "react";
 import PropTypes from "prop-types";
-const FilterContext = createContext();
+import { useProducts } from "../hooks/useProduct";
+
+export const FilterContext = createContext();
 
 export const FilterProvider = ({ children }) => {
+  const { products, favorites } = useProducts();
   const [filters, setFilters] = useState({
     minPrice: 0,
     category: "all categories",
     title: "",
   });
-  const filterProducts = (products) => {
+  const resetFilters = () => {
+    setFilters({
+      minPrice: 0,
+      category: "all categories",
+      title: "",
+    });
+    setFavoritesFilters({
+      minPrice: 0,
+      category: "all categories",
+      title: "",
+    });
+  };
+  const [favoritesFilters, setFavoritesFilters] = useState(filters);
+
+  const filterProducts = (products, appliedFilters) => {
     return products.filter((product) => {
       return (
-        product.price >= filters.minPrice &&
-        (filters.category === "all categories" ||
-          product.category === filters.category) &&
-        product.title.toLowerCase().includes(filters.title.toLowerCase())
+        product.price >= appliedFilters.minPrice &&
+        (appliedFilters.category === "all categories" ||
+          product.category === appliedFilters.category) &&
+        product.title.toLowerCase().includes(appliedFilters.title.toLowerCase())
       );
     });
   };
+  const filterFavorites = (favorites) => {
+    return filterProducts(favorites, favoritesFilters);
+  };
+
+  const filteredProducts = filterProducts(products || [], filters);
+  const filteredFavorites = filterFavorites(favorites || []);
 
   return (
-    <FilterContext.Provider value={{ filters, setFilters, filterProducts }}>
+    <FilterContext.Provider
+      value={{
+        filters,
+        resetFilters,
+        setFilters,
+        filterProducts,
+        setFavoritesFilters,
+        filteredProducts,
+        filteredFavorites,
+      }}
+    >
       {children}
     </FilterContext.Provider>
   );

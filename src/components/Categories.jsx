@@ -1,18 +1,23 @@
 import { useLocation } from "react-router-dom";
 import ItemListContainer from "./ItemListContainer";
 import { useEffect } from "react";
-import { useProducts } from "../hooks/useProduct";
+import { useFilters } from "../hooks/useFilters";
 
 const Categories = () => {
-  const { state } = useLocation();
-  const { setFilters, filteredProducts } = useProducts();
+  const { state, pathname } = useLocation();
+
+  const { setFilters, resetFilters } = useFilters();
   useEffect(() => {
     setFilters((prevState) => ({
       ...prevState,
       category: state.category,
     }));
-  }, [state]);
 
-  return <ItemListContainer filters={filteredProducts} />;
+    return () => {
+      resetFilters();
+    };
+  }, [pathname]);
+
+  return <ItemListContainer />;
 };
 export default Categories;

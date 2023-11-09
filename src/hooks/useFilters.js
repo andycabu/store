@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { FiltersContext } from "../context/FilterContext";
+import { FilterContext } from "../context/FilterContext";
 
 export const useFilters= () => {
-  const context = useContext(FiltersContext);
+  const context = useContext(FilterContext);
   if (!context) {
     throw new Error("useFilters debe estar dentro del proveedor FiltersContext");
   }

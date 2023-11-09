@@ -5,6 +5,7 @@ import { useProducts } from "../hooks/useProduct";
 import { AddToCartIcon, RemoveFromCartIcon } from "./Icon";
 import Like from "./Like";
 import useFavorites from "../hooks/useFavorite";
+import ButtonsCart from "./ButtonsCart";
 
 const ItemDetailContainer = () => {
   const { state } = useLocation();
@@ -37,6 +38,7 @@ const ItemDetailContainer = () => {
             <h2 className="">{product.title}</h2>
             <p className="">{product.description}</p>
           </div>
+          <ButtonsCart product={product} />
           <div>
             <Button
               onClick={() =>
