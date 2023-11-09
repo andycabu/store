@@ -72,7 +72,13 @@ const Filters = () => {
           />
         </div>
       </div>
-      <div className="text-center font-bold text-5xl pt-20">
+      <div
+        className={
+          noFavoritesFound || noProductsFound
+            ? "text-center font-bold text-5xl pt-20"
+            : "hidden"
+        }
+      >
         <h1>
           {(noProductsFound && "No products found") ||
             (noFavoritesFound && "No favorite products found")}
