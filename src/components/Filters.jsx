@@ -61,13 +61,13 @@ const Filters = () => {
           />
           <span>€{filters.minPrice}</span>
         </div>
-        <div className="flex max-[590px]:w-full">
+        <div className="flex  max-[590px]:w-full">
           <label className="pr-4" htmlFor="">
             search:
           </label>
           <input
             onChange={handleChangeProduct}
-            className="bg-[var(--card-border-color)] rounded-md"
+            className="bg-[var(--card-border-color)] rounded-md max-[590px]:w-full"
             type="text"
           />
         </div>
