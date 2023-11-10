@@ -1,17 +1,16 @@
-import { useProducts } from "../hooks/useProduct";
 import PropTypes from "prop-types";
 import Button from "./Button";
 import { AddIcon, ClearCartIcon, SubtractIcon } from "./Icon";
+import { useCart } from "../hooks/useCart";
 
 const ButtonsCart = ({ product }) => {
-  const { removeFromCart, subtractToCart, addToCart, getQuantity } =
-    useProducts();
+  const { removeFromCart, subtractToCart, addToCart, getQuantity } = useCart();
   const quantity = getQuantity(product.id);
   return (
     <div className="flex gap-1">
       {quantity === 1 ? (
         <Button
-          onClick={() => removeFromCart(product)}
+          onClick={() => removeFromCart(product.id)}
           background={"bg-red-500 hover:bg-red-600"}
           icon={<ClearCartIcon className={"h-6 w-6 "} />}
         />

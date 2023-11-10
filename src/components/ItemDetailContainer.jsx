@@ -1,17 +1,17 @@
 import { useLocation } from "react-router-dom";
 import { formatPrecio } from "../utilities/utilitys";
 import Button from "./Button";
-import { useProducts } from "../hooks/useProduct";
 import { AddToCartIcon, RemoveFromCartIcon } from "./Icon";
 import Like from "./Like";
 import useFavorites from "../hooks/useFavorite";
 import ButtonsCart from "./ButtonsCart";
+import { useCart } from "../hooks/useCart";
 
 const ItemDetailContainer = () => {
   const { state } = useLocation();
   const { product } = state;
   const { integer, decimals } = formatPrecio(product.price);
-  const { removeFromCart, addToCart, checkProductInCart } = useProducts();
+  const { removeFromCart, addToCart, checkProductInCart } = useCart();
   const { toggleFavorite, likedProducts } = useFavorites();
 
   const isProductInCart = checkProductInCart(product);
@@ -29,7 +29,7 @@ const ItemDetailContainer = () => {
             className="h-[40rem] max-lg:h-[28rem] max-sm:h-[22rem] max-[480px]:h-[30rem] w-[30rem] rounded-xl object-cover "
           />
         </div>
-        <div className="flex flex-col justify-around p-6 ">
+        <div className="flex flex-col justify-around p-6 max-[480px]:gap-4">
           <p className="font-bold text-xl leading-relaxed text-right">
             {integer}
             <sup className="">{decimals}€</sup>
@@ -38,11 +38,14 @@ const ItemDetailContainer = () => {
             <h2 className="">{product.title}</h2>
             <p className="">{product.description}</p>
           </div>
-          <ButtonsCart product={product} />
-          <div>
+          <div className="flex  max-[820px]:flex-col gap-4 items-center justify-center">
+            <ButtonsCart product={product} />
+
             <Button
               onClick={() =>
-                isProductInCart ? removeFromCart(product) : addToCart(product)
+                isProductInCart
+                  ? removeFromCart(product.id)
+                  : addToCart(product)
               }
               background={isProductInCart ? "bg-red-500 hover:bg-red-600" : ""}
               text={isProductInCart ? "Remove from cart" : "Add to cart"}

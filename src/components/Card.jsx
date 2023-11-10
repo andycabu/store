@@ -1,7 +1,7 @@
-import { useProducts } from "../hooks/useProduct";
 import PropTypes from "prop-types";
 import { formatPrecio } from "../utilities/utilitys";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../hooks/useCart";
 
 const Card = ({
   products,
@@ -11,7 +11,7 @@ const Card = ({
   renderLike,
   text,
 }) => {
-  const { checkProductInCart } = useProducts();
+  const { checkProductInCart } = useCart();
   const navigate = useNavigate();
 
   return products.map((product) => {

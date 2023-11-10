@@ -3,14 +3,16 @@ import logo from "../assets/img/logo.png";
 import { Link } from "react-router-dom";
 import DayNight from "./DayNight";
 import { useEffect, useState } from "react";
-import { useProducts } from "../hooks/useProduct";
 import Aside from "./Aside";
 import { useAside } from "../hooks/useAside";
 import Dropdown from "./Dropdown";
 import CartWidget from "./CartWidget";
+import { useCart } from "../hooks/useCart";
+import { useProducts } from "../hooks/useProduct";
 
 const Navbar = () => {
-  const { favorites, cartCount } = useProducts();
+  const { favorites } = useProducts();
+  const { cartCount } = useCart();
   const [favoriteCount, setFavoriteCount] = useState(0);
   const { toggleAside } = useAside();
 

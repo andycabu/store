@@ -3,20 +3,21 @@ import Card from "./Card";
 import Like from "./Like";
 import PropTypes from "prop-types";
 import { AddToCartIcon, RemoveFromCartIcon } from "./Icon";
-import { useProducts } from "../hooks/useProduct";
+import { useCart } from "../hooks/useCart";
 import useFavorites from "../hooks/useFavorite";
 import Filters from "./Filters";
 import { useFilters } from "../hooks/useFilters";
 
 const ItemListContainer = ({ favorites }) => {
-  const { removeFromCart, addToCart } = useProducts();
+  const { removeFromCart, addToCart } = useCart();
+
   const { filteredProducts } = useFilters();
   const { likedProducts, toggleFavorite } = useFavorites();
 
   const renderButton = (product, isProductInCart) => (
     <Button
       onClick={() =>
-        isProductInCart ? removeFromCart(product) : addToCart(product)
+        isProductInCart ? removeFromCart(product.id) : addToCart(product)
       }
       background={isProductInCart ? "bg-red-500 hover:bg-red-600" : ""}
       text={isProductInCart ? "Remove from cart" : "Add to cart"}

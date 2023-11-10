@@ -1,14 +1,14 @@
 import { ClearCartIcon } from "./Icon";
-import { useProducts } from "../hooks/useProduct";
 import Button from "./Button";
 import Card from "./Card";
 import { formatPrecio } from "../utilities/utilitys";
 import Aside from "./Aside";
 import ButtonsCart from "./ButtonsCart";
+import { useCart } from "../hooks/useCart";
 
 const Cart = () => {
-  const { cart, removeFromCart, clearCart, totalPrice, cartCount } =
-    useProducts();
+  const { cart, clearCart, removeFromCart, totalPrice, cartCount } = useCart();
+  console.log(cart);
 
   const { integer, decimals } = formatPrecio(totalPrice);
 
@@ -43,7 +43,7 @@ const Cart = () => {
                   <ButtonsCart product={product} />
                   {product.quantity > 1 && (
                     <Button
-                      onClick={() => removeFromCart(product)}
+                      onClick={() => removeFromCart(product.id)}
                       background={"bg-red-500 hover:bg-red-600"}
                       icon={<ClearCartIcon className={"h-6 w-6 "} />}
                     />
