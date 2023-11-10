@@ -309,6 +309,15 @@ svg #main-circ {
   transition: 0.1s opacity 0.3s;
 }
 
+
+
+.dropdown-menu::before {
+  @apply content-[""] absolute -top-[10px] left-[38%] translate-x-1/2 max-md:hidden;
+  border-left: 10px solid transparent; 
+  border-right: 10px solid transparent; 
+  border-bottom: 10px solid var(--background-color); 
+}
+
 @keyframes animateCircle {
   40% {
     transform: scale(10);
