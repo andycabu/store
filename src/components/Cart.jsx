@@ -8,7 +8,6 @@ import { useCart } from "../hooks/useCart";
 
 const Cart = () => {
   const { cart, clearCart, removeFromCart, totalPrice, cartCount } = useCart();
-  console.log(cart);
 
   const { integer, decimals } = formatPrecio(totalPrice);
 

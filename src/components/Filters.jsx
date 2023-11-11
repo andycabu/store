@@ -18,7 +18,6 @@ const Filters = () => {
   const isFavoritesPage = pathname === "/favorites";
 
   useEffect(() => {
-    console.log("prueba");
     if (pathname !== "/" || pathname !== "/favorites") {
       resetFilters();
     }
