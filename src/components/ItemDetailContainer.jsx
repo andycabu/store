@@ -21,12 +21,12 @@ const ItemDetailContainer = () => {
       <div onClick={() => toggleFavorite(product)}>
         <Like checked={likedProducts[product.id]} />
       </div>
-      <div className="flex max-[480px]:flex-col  rounded-xl bg-[var(--card-background-color)] bg-clip-border shadow-md max-[400px]:text-xs">
-        <div className="p-4 overflow-hidden rounded-xl">
+      <div className="flex max-[584px]:flex-col  rounded-xl bg-[var(--card-background-color)] bg-clip-border shadow-md max-[400px]:text-xs">
+        <div className="flex justify-center p-4 overflow-hidden rounded-xl">
           <img
             src={product.image}
             alt={product.title}
-            className="h-[40rem] max-lg:h-[28rem] max-sm:h-[22rem] max-[480px]:h-[30rem] w-[30rem] rounded-xl object-cover "
+            className=" w-[30rem] rounded-xl object-cover "
           />
         </div>
         <div className="flex flex-col justify-around p-6 max-[480px]:gap-4">

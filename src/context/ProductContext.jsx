@@ -1,12 +1,11 @@
 import { createContext, useState, useEffect } from "react";
-
 import PropTypes from "prop-types";
+import { database } from "../../db/firebase";
+import { ref, onValue } from "firebase/database";
 
 export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
-  const url = "https://fakestoreapi.com/products";
-
   const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState({
     category: "all categories",
@@ -21,9 +20,13 @@ export const ProductProvider = ({ children }) => {
     window.localStorage.setItem("favorites", JSON.stringify(state));
   };
   const getProducts = async () => {
-    const res = await fetch(url);
-    const data = await res.json();
-    setProducts(data);
+    const dataRef = ref(database, "/");
+    const unsubscribe = onValue(dataRef, (snapshot) => {
+      const data = snapshot.val();
+      setProducts(data);
+    });
+
+    return () => unsubscribe();
   };
 
   const addToFavorite = (product) => {
@@ -41,6 +44,7 @@ export const ProductProvider = ({ children }) => {
 
   useEffect(() => {
     if (products.length < 1) {
+      console.log("prueba");
       getProducts();
     }
   }, []);

@@ -41,7 +41,6 @@ const ItemListContainer = ({ favorites }) => {
       <Filters />
       <div className="grid justify-items-center justify-center grid-cols-auto-fit-minmax gap-6 p-8">
         <Card
-          heightAndWidthImg={"h-96"}
           styles={"w-96 max-[400px]:w-72 flex-col"}
           products={favorites ? favorites : filteredProducts}
           renderButton={renderButton}

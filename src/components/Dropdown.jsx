@@ -46,6 +46,10 @@ const Dropdown = () => {
       id: 4,
       text: "women's clothing",
     },
+    {
+      id: 5,
+      text: "backpack",
+    },
   ];
 
   return (

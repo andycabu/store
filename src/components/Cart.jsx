@@ -32,7 +32,6 @@ const Cart = () => {
           </div>
           <div className="flex flex-col gap-4 border-y border-solid border-[#444] py-8 my-4 ">
             <Card
-              heightAndWidthImg={"h-40  w-80  max-[490px]:h-48 "}
               styles={
                 "flex w-full max-[400px]:flex-col max-[400px]:items-center"
               }
