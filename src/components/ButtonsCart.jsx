@@ -4,11 +4,23 @@ import { AddIcon, ClearCartIcon, SubtractIcon } from "./Icon";
 import { useCart } from "../hooks/useCart";
 
 const ButtonsCart = ({ product }) => {
-  const { removeFromCart, subtractToCart, addToCart, getQuantity } = useCart();
+  const {
+    removeFromCart,
+    getQuantity,
+    updateProductQuantity,
+    tempQuantities,
+    checkProductInCart,
+  } = useCart();
+
   const quantity = getQuantity(product.id);
+  const displayQuantity =
+    tempQuantities[product.id] !== undefined
+      ? tempQuantities[product.id]
+      : quantity;
+  const isProductInCart = checkProductInCart(product);
   return (
     <div className="flex gap-1">
-      {quantity === 1 ? (
+      {quantity === 1 && isProductInCart ? (
         <Button
           onClick={() => removeFromCart(product.id)}
           background={"bg-red-500 hover:bg-red-600"}
@@ -17,15 +29,18 @@ const ButtonsCart = ({ product }) => {
       ) : (
         <Button
           icon={<SubtractIcon />}
-          onClick={() => subtractToCart(product)}
+          onClick={() => updateProductQuantity(product, -1)}
           background={"bg-red-500 hover:bg-red-600"}
         />
       )}
 
       <div className="bg-[var(--background-color)] rounded  py-2 px-4     select-none">
-        <small>{quantity}</small>
+        <small>{displayQuantity}</small>
       </div>
-      <Button icon={<AddIcon />} onClick={() => addToCart(product)} />
+      <Button
+        icon={<AddIcon />}
+        onClick={() => updateProductQuantity(product, 1)}
+      />
     </div>
   );
 };

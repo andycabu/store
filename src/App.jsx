@@ -12,7 +12,7 @@ import { ProductProvider } from "./context/ProductContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { FilterProvider } from "./context/FilterContext";
 import { CartProvider } from "./context/CartContext";
-
+import Pruebas from "./pages/Pruebas";
 function App() {
   return (
     <>
@@ -33,6 +33,7 @@ function App() {
                         element={<ItemDetailContainer />}
                       />
                       <Route path="/category/:id" element={<Categories />} />
+                      <Route path="/contact" element={<Pruebas />} />
                     </Routes>
                   </main>
                 </AsideProvider>

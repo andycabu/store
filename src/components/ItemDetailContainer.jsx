@@ -39,8 +39,9 @@ const ItemDetailContainer = () => {
             <p className="">{product.description}</p>
           </div>
           <div className="flex  max-[820px]:flex-col gap-4 items-center justify-center">
-            <ButtonsCart product={product} />
-
+            <div className={isProductInCart && "hidden"}>
+              <ButtonsCart product={product} />
+            </div>
             <Button
               onClick={() =>
                 isProductInCart

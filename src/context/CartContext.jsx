@@ -12,13 +12,17 @@ export const CartProvider = ({ children }) => {
   );
   const [totalPrice, setTotalPrice] = useState(0);
   const [cartCount, setCartCount] = useState(0);
+  const [tempQuantities, setTempQuantities] = useState({});
 
   function addToCart(product) {
     const productInCartIndex = cart.findIndex((item) => item.id === product.id);
 
     if (productInCartIndex >= 0) {
       const newCart = structuredClone(cart);
-      newCart[productInCartIndex].quantity += 1;
+      const additionalQuantity = tempQuantities[product.id] || 1;
+      newCart[productInCartIndex].quantity += additionalQuantity;
+
+      delete tempQuantities[product.id];
       updateToLocalStorage(newCart);
       setCart(newCart);
       return newCart;
@@ -28,44 +32,66 @@ export const CartProvider = ({ children }) => {
       ...cart,
       {
         ...product,
-        quantity: 1,
+        quantity: tempQuantities[product.id] || 1,
       },
     ];
+    delete tempQuantities[product.id];
     updateToLocalStorage(newState);
     setCart(newState);
     return newState;
   }
+  function updateProductQuantity(product, quantityChange) {
+    const productInCartIndex = cart.findIndex((item) => item.id === product.id);
+
+    if (productInCartIndex >= 0) {
+      const newCart = structuredClone(cart);
+      const newQuantity = Math.max(
+        newCart[productInCartIndex].quantity + quantityChange,
+        0
+      );
+      newCart[productInCartIndex].quantity = newQuantity;
+      applyCartChanges(newCart);
+    } else {
+      setTempQuantities((prevQuantities) => {
+        const newTempQuantity = Math.max(
+          (prevQuantities[product.id] || 0) + quantityChange,
+          0
+        );
+        return {
+          ...prevQuantities,
+          [product.id]: newTempQuantity,
+        };
+      });
+    }
+  }
+
   const removeFromCart = (id) => {
     const newState = cart.filter((item) => item.id !== id);
     setCart(newState);
     updateToLocalStorage(newState);
     return newState;
   };
-  const subtractToCart = (product) => {
-    const productInCartIndex = cart.findIndex((item) => item.id === product.id);
 
-    if (productInCartIndex >= 0) {
-      const newCart = structuredClone(cart);
-
-      if (newCart[productInCartIndex].quantity > 1) {
-        newCart[productInCartIndex].quantity -= 1;
-      }
-      setCart(newCart);
-      updateToLocalStorage(newCart);
-
-      return newCart;
-    }
-  };
+  function applyCartChanges(newCart) {
+    updateToLocalStorage(newCart);
+    setCart(newCart);
+  }
   const clearCart = () => {
     setCart([]);
     updateToLocalStorage([]);
   };
   const checkProductInCart = (product) =>
     cart.some((item) => item.id === product.id);
+
   const getQuantity = (productId) => {
-    const item = cart.find((item) => item.id === productId);
-    return item ? item.quantity : 0;
+    const productInCartIndex = cart.findIndex((item) => item.id === productId);
+    if (productInCartIndex >= 0) {
+      return cart[productInCartIndex].quantity;
+    }
+
+    return tempQuantities[productId] || 0;
   };
+
   useEffect(() => {
     const calculateTotalItems = (items) => {
       return items.reduce((sum, item) => sum + item.quantity, 0);
@@ -90,13 +116,14 @@ export const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cart,
+        tempQuantities,
         totalPrice,
         cartCount,
         addToCart,
-        subtractToCart,
         removeFromCart,
         checkProductInCart,
         clearCart,
+        updateProductQuantity,
         getQuantity,
       }}
     >
