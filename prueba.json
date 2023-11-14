@@ -181,7 +181,7 @@
     }
   },
   {
-    "category": "men's Clothing",
+    "category": "men's clothing",
     "title": "ClassicFit Wool Suit",
     "description": "Elegant and classic wool suit, perfect for business or formal events. Tailored fit with high-quality fabric.",
     "id": 16,
@@ -193,7 +193,7 @@
     }
   },
   {
-    "category": "men's Clothing",
+    "category": "men's clothing",
     "title": "UrbanStyle Leather Jacket",
     "description": "Genuine leather jacket with an urban and modern design. Perfect for a casual or night-time look.",
     "id": 17,
@@ -205,7 +205,7 @@
     }
   },
   {
-    "category": "men's Clothing",
+    "category": "men's clothing",
     "title": "TechWear Cargo Pants",
     "description": "Water-resistant techwear cargo pants with multiple pockets. Ideal for outdoor adventures or urban use.",
     "id": 18,
@@ -217,7 +217,7 @@
     }
   },
   {
-    "category": "men's Clothing",
+    "category": "men's clothing",
     "title": "SmartCasual Polo Shirt",
     "description": "Soft and breathable cotton polo shirt with an elegant and casual look. Perfect for any occasion.",
     "id": 19,
@@ -229,7 +229,7 @@
     }
   },
   {
-    "category": "men's Clothing",
+    "category": "men's clothing",
     "title": "HighPerformance Running Shoes",
     "description": "High-performance running shoes with cushioning technology and support. Lightweight and aerodynamic design for maximum comfort.",
     "id": 20,
@@ -238,6 +238,66 @@
     "rating": {
       "count": 180,
       "rate": 4.9
+    }
+  },
+  {
+    "category": "women's clothing",
+    "title": "ElegantSilk Evening Dress",
+    "description": "Elegant silk evening dress with a sophisticated cut and delicate details. Perfect for formal events.",
+    "id": 21,
+    "image": "https://firebasestorage.googleapis.com/v0/b/store-f6bf5.appspot.com/o/Women's%20Clothing-1.png?alt=media&token=be6efcd9-affe-4aff-8438-2955c8b4a5b4",
+    "price": 350,
+    "rating": {
+      "count": 90,
+      "rate": 4.8
+    }
+  },
+  {
+    "category": "women's clothing",
+    "title": "ChicLeather Handbag",
+    "description": "Chic and versatile leather handbag, spacious enough for daily use or special occasions.",
+    "id": 22,
+    "image": "https://firebasestorage.googleapis.com/v0/b/store-f6bf5.appspot.com/o/Women's%20Clothing-2.png?alt=media&token=a6966aac-9332-47e9-98d5-b4f2dac6e061",
+    "price": 250,
+    "rating": {
+      "count": 110,
+      "rate": 4.7
+    }
+  },
+  {
+    "category": "women's clothing",
+    "title": "TrendyDenim Jacket",
+    "description": "Fashionable and trendy denim jacket, with a distressed design and contemporary details.",
+    "id": 23,
+    "image": "https://firebasestorage.googleapis.com/v0/b/store-f6bf5.appspot.com/o/Women's%20Clothing-3.png?alt=media&token=46a74012-4ade-467f-8ce2-953a9704f352",
+    "price": 150,
+    "rating": {
+      "count": 130,
+      "rate": 4.6
+    }
+  },
+  {
+    "category": "women's clothing",
+    "title": "CasualCotton Blouse",
+    "description": "Casual, lightweight, and breathable cotton blouse with a fresh and feminine design. Ideal for everyday wear.",
+    "id": 24,
+    "image": "https://firebasestorage.googleapis.com/v0/b/store-f6bf5.appspot.com/o/Women's%20Clothing-4.png?alt=media&token=3a87aa2e-c42f-42d7-ad27-dd6faa6b01db",
+    "price": 80,
+    "rating": {
+      "count": 160,
+      "rate": 4.7
+    }
+  },
+  {
+    "category": "women's clothing",
+    "title": "SportyChic Sneakers",
+    "description": "Sporty chic sneakers with a modern and comfortable design. Suitable for exercise or an active lifestyle.",
+    "id": 25,
+    "image": "https://firebasestorage.googleapis.com/v0/b/store-f6bf5.appspot.com/o/Women's%20Clothing-5.png?alt=media&token=110c5618-deab-45e4-a2ac-37f94c32a964",
+    "price": 120,
+    "rating": {
+      "count": 150,
+      "rate": 4.8
     }
   }
 ]

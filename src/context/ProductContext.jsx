@@ -20,14 +20,16 @@ export const ProductProvider = ({ children }) => {
     window.localStorage.setItem("favorites", JSON.stringify(state));
   };
   const getProducts = async () => {
-    const dataRef = ref(database, "/");
-    const unsubscribe = onValue(dataRef, (snapshot) => {
+    const productsRef = ref(database, "/products");
+    onValue(productsRef, (snapshot) => {
       const data = snapshot.val();
-      setProducts(data);
+      const productsArray = data
+        ? Object.entries(data).map(([key, value]) => ({ id: key, ...value }))
+        : [];
+      setProducts(productsArray);
     });
-
-    return () => unsubscribe();
   };
+  console.log(products);
 
   const addToFavorite = (product) => {
     setFavorites((prevFavorites) => {
@@ -44,7 +46,6 @@ export const ProductProvider = ({ children }) => {
 
   useEffect(() => {
     if (products.length < 1) {
-      console.log("prueba");
       getProducts();
     }
   }, []);
