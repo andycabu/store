@@ -10,7 +10,7 @@ import { ref as databaseRef, push } from "firebase/database";
 import { useState } from "react";
 import ProgressBar from "../components/ProgressBar";
 
-function Prueba() {
+function RegisterProductPage() {
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -131,4 +131,4 @@ function Prueba() {
   );
 }
 
-export default Prueba;
+export default RegisterProductPage;

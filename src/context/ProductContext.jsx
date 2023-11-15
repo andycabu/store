@@ -29,7 +29,6 @@ export const ProductProvider = ({ children }) => {
       setProducts(productsArray);
     });
   };
-  console.log(products);
 
   const addToFavorite = (product) => {
     setFavorites((prevFavorites) => {

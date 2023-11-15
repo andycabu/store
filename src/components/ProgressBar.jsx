@@ -1,12 +1,10 @@
 const ProgressBar = ({ progress }) => {
+  console.log(progress);
   return (
-    <div style={{ width: "100%", backgroundColor: "#ddd" }}>
+    <div className="w-full bg-[var(--text-color)] rounded-lg">
       <div
-        style={{
-          height: "20px",
-          width: `${progress}%`,
-          backgroundColor: "blue",
-        }}
+        style={{ width: `${progress}%` }}
+        className={`h-5 w- bg-green-600`}
       ></div>
     </div>
   );
