@@ -71,7 +71,7 @@ function LoginOrRegisterPage() {
             : " Already have an account with us?"}
           <Link
             className=" text-xs pl-2  pt-8 text-blue-500 hover:text-blue-600 hover:border-b border-blue-600"
-            to={"/register"}
+            to={route ? "/register" : "/login"}
           >
             {route ? "Sign up" : "Sign in"}
           </Link>
