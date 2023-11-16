@@ -18,7 +18,7 @@ export const UsersProvider = ({ children }) => {
   const [authorizedUsers, setAuthorizedUsers] = useState();
 
   // Función para registrar un nuevo usuario
-  const registerUser = async (email, password) => {
+  const registerUser = async ({ email, password }) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,

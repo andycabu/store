@@ -14,9 +14,8 @@ import { FilterProvider } from "./context/FilterContext";
 import { CartProvider } from "./context/CartContext";
 import RegisterProductPage from "./pages/RegisterProductPage";
 import { UsersProvider } from "./context/UsersContext";
-import RegisterPage from "./pages/RegisterPage";
-import LoginPage from "./pages/LoginPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import LoginOrRegisterPage from "./pages/LoginOrRegisterPage";
 function App() {
   return (
     <>
@@ -46,8 +45,14 @@ function App() {
                             </ProtectedRoute>
                           }
                         />
-                        <Route path="/register" element={<RegisterPage />} />
-                        <Route path="/login" element={<LoginPage />} />
+                        <Route
+                          path="/register"
+                          element={<LoginOrRegisterPage />}
+                        />
+                        <Route
+                          path="/login"
+                          element={<LoginOrRegisterPage />}
+                        />
                       </Routes>
                     </main>
                   </AsideProvider>

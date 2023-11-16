@@ -117,8 +117,8 @@ function RegisterProductPage() {
   return (
     <>
       <div className="max-w-4xl p-6 mx-auto bg-[var(--card-background-color)] rounded-md shadow-md  ">
+        <h1>Create your product</h1>
         <Form
-          title={"Create your product"}
           style="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 text-[var(--text-color)]"
           onSubmit={handleSubmit}
           contentForm={contentForm}

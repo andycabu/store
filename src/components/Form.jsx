@@ -2,10 +2,9 @@ import PropTypes from "prop-types";
 import Button from "./Button";
 import React from "react";
 
-function Form({ onSubmit, contentForm, style, title }) {
+function Form({ onSubmit, contentForm, style }) {
   return (
     <>
-      <h1>{title}</h1>
       <form className={style} onSubmit={onSubmit}>
         {contentForm.map((item, i) => (
           <React.Fragment key={i}>
@@ -109,7 +108,6 @@ Form.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   contentForm: PropTypes.array.isRequired,
   style: PropTypes.string,
-  title: PropTypes.string,
 };
 
 export default Form;

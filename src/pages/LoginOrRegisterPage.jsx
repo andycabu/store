@@ -1,15 +1,19 @@
 import Form from "../components/Form";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useUsers } from "../hooks/useUsers";
 import Button from "../components/Button";
 
-function LoginPage() {
-  const { loginUser, signInWithGoogle, user } = useUsers();
+function LoginOrRegisterPage() {
+  const { loginUser, signInWithGoogle, user, registerUser } = useUsers();
   const [newUser, setUser] = useState({
     email: "",
     password: "",
   });
+  const { pathname } = useLocation();
+
+  const route = pathname === "/login";
+
   const navigate = useNavigate();
   const handleChange = (e) => {
     // Obtén el nombre y el valor del elemento que cambió
@@ -30,7 +34,11 @@ function LoginPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    loginUser(newUser);
+    if (route) {
+      loginUser(newUser);
+    } else {
+      registerUser(newUser);
+    }
   };
 
   const contentForm = [
@@ -41,7 +49,7 @@ function LoginPage() {
       typeInput: "email",
       onChange: handleChange,
       autoComplete: "email",
-      textButton: "Login",
+      textButton: route ? "Login" : "Register",
     },
     {
       labelText: "Contraseña ",
@@ -53,24 +61,28 @@ function LoginPage() {
     },
   ];
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center max-sm:p-4">
       <div className=" p-8 flex flex-col gap-4 bg-[var(--card-background-color)] rounded-md shadow-md  ">
-        <h1 className="font-bold text-2xl">Welcome back</h1>
+        <h1 className="font-bold text-2xl">Welcome {route && "back"}</h1>
         <p>
-          Start your website in seconds. Don’t have an account?
+          Start your website in seconds.
+          {route
+            ? " Don’t have an account?"
+            : " Already have an account with us?"}
           <Link
             className=" text-xs pl-2  pt-8 text-blue-500 hover:text-blue-600 hover:border-b border-blue-600"
             to={"/register"}
           >
-            Sign up
+            {route ? "Sign up" : "Sign in"}
           </Link>
           .
         </p>
         <Form
-          style="flex gap-4 text-[var(--text-color)]"
+          style="flex flex-col  gap-4 text-[var(--text-color)]"
           contentForm={contentForm}
           onSubmit={handleSubmit}
         />
+        <p className="font-bold text-lg text-center max">Or</p>
         <div className="flex flex-col items-center justify-center space-y-4 ">
           <Button
             icon={
@@ -111,28 +123,16 @@ function LoginPage() {
               </svg>
             }
             onClick={signInWithGoogle}
-            text={"Sign in with Google"}
+            text={`${route ? "Sign" : "Register"} in with Google`}
             background={
-              "bg-[var(--card-background-color)] hover:bg-[var(--background-color)] border border-[var(--background-color)] border-solid"
+              "bg-[var(--card-background-color)] hover:bg-[var(--background-color)] border-[2px] border-[var(--background-color)] border-solid"
             }
             textColor={" text-[var(--text-color)]"}
           />
-
-          <div className="flex">
-            <div className="w-full h-4 bg-red-700" />
-            <div className="flex justify-center text-sm">
-              <span>or</span>
-            </div>
-            <div className="w-full border-t border-gray-300"></div>
-          </div>
-
-          <button className="w-full max-w-xs py-2 px-4 bg-black text-white font-semibold rounded shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-opacity-50">
-            Sign in with Apple
-          </button>
         </div>
       </div>
     </div>
   );
 }
 
-export default LoginPage;
+export default LoginOrRegisterPage;

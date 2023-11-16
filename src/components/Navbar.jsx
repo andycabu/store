@@ -67,7 +67,7 @@ const Navbar = () => {
             </ul>
             <div className="flex   space-x-5 items-center ">
               <div className="flex  space-x-5 items-center">
-                <Link to={!user && "Login"}>
+                <Link to={!user && "login"}>
                   {displayName ? displayName : "Login"}
                 </Link>
                 <button className={!user && "hidden"} onClick={handleSignOut}>
