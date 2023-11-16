@@ -15,6 +15,8 @@ import { CartProvider } from "./context/CartContext";
 import RegisterProductPage from "./pages/RegisterProductPage";
 import { UsersProvider } from "./context/UsersContext";
 import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 function App() {
   return (
     <>
@@ -38,9 +40,14 @@ function App() {
                         <Route path="/category/:id" element={<Categories />} />
                         <Route
                           path="/resgister-product"
-                          element={<RegisterProductPage />}
+                          element={
+                            <ProtectedRoute>
+                              <RegisterProductPage />
+                            </ProtectedRoute>
+                          }
                         />
                         <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/login" element={<LoginPage />} />
                       </Routes>
                     </main>
                   </AsideProvider>

@@ -1,6 +1,6 @@
 import Form from "../components/Form";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useUsers } from "../hooks/useUsers";
 
 function RegisterPage() {
@@ -8,15 +8,14 @@ function RegisterPage() {
     email: "",
     password: "",
   });
-  //   const navigate = useNavigate();
-  const { registerUser, signInWithGoogle } = useUsers();
+  const navigate = useNavigate();
+  const { registerUser, user } = useUsers();
 
-  //   useEffect(() => {
-  //     isAuthenticated && navigate("/login");
-  //   }, [isAuthenticated]);
+  useEffect(() => {
+    user && navigate("/");
+  }, [user]);
 
   const createUser = async ({ email, password }) => {
-    console.log(email, password);
     registerUser(email, password);
   };
 
@@ -67,7 +66,6 @@ function RegisterPage() {
       <div className="flex text-xs justify-end items-center gap-4 pt-8 text-blue-500 hover:text-blue-600">
         <Link to="/login">Login</Link>
       </div>
-      <button onClick={signInWithGoogle}>Iniciar sesión con Google</button>
     </div>
   );
 }

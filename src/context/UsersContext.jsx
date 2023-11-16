@@ -1,17 +1,21 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { auth } from "../../db/firebase";
+import { auth, database } from "../../db/firebase";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
+import { ref, onValue } from "firebase/database";
 
 export const UsersContext = createContext();
 
 export const UsersProvider = ({ children }) => {
   const [user, setUser] = useState();
+  const [authorizedUsers, setAuthorizedUsers] = useState();
 
   // Función para registrar un nuevo usuario
   const registerUser = async (email, password) => {
@@ -28,14 +32,32 @@ export const UsersProvider = ({ children }) => {
     }
   };
 
+  const fetchAuthorizedUsers = async () => {
+    const authUsersRef = ref(database, "/authorizedUsers");
+    onValue(
+      authUsersRef,
+      (snapshot) => {
+        const authorizedUsers = snapshot.val();
+        setAuthorizedUsers(authorizedUsers);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  };
+  useEffect(() => {
+    fetchAuthorizedUsers();
+  }, []);
+
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     const registeredUser = await signInWithPopup(auth, provider);
-    setUser(registeredUser);
+    const { user } = registeredUser;
+    setUser(user);
   };
 
   // Función para iniciar sesión
-  const loginUser = async (email, password) => {
+  const loginUser = async ({ email, password }) => {
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -47,10 +69,35 @@ export const UsersProvider = ({ children }) => {
       console.error("Error al iniciar sesión:", error);
     }
   };
+  const handleSignOut = () => {
+    signOut(auth);
+  };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        // Usuario está conectado
+        setUser(currentUser);
+      } else {
+        // Usuario no está conectado
+        setUser(null);
+      }
+    });
+
+    // Desuscribirse del observador cuando el componente se desmonte
+    return () => unsubscribe();
+  }, []);
 
   return (
     <UsersContext.Provider
-      value={{ registerUser, loginUser, signInWithGoogle }}
+      value={{
+        user,
+        registerUser,
+        loginUser,
+        signInWithGoogle,
+        handleSignOut,
+        fetchAuthorizedUsers,
+        authorizedUsers,
+      }}
     >
       {children}
     </UsersContext.Provider>

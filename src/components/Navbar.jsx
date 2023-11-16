@@ -9,12 +9,14 @@ import Dropdown from "./Dropdown";
 import CartWidget from "./CartWidget";
 import { useCart } from "../hooks/useCart";
 import { useProducts } from "../hooks/useProduct";
+import { useUsers } from "../hooks/useUsers";
 
 const Navbar = () => {
   const { favorites } = useProducts();
   const { cartCount } = useCart();
   const [favoriteCount, setFavoriteCount] = useState(0);
   const { toggleAside } = useAside();
+  const { user, handleSignOut } = useUsers();
 
   const itemsNabar = [
     {
@@ -35,6 +37,8 @@ const Navbar = () => {
   useEffect(() => {
     setFavoriteCount(favorites.length);
   }, [favorites]);
+
+  const displayName = user?.displayName;
 
   return (
     <>
@@ -63,6 +67,12 @@ const Navbar = () => {
             </ul>
             <div className="flex   space-x-5 items-center ">
               <div className="flex  space-x-5 items-center">
+                <Link to={!user && "Login"}>
+                  {displayName ? displayName : "Login"}
+                </Link>
+                <button className={!user && "hidden"} onClick={handleSignOut}>
+                  out
+                </button>
                 <Link
                   to="/favorites"
                   className="hover:text-[var(--text-color-hover)]  relative"
@@ -75,9 +85,6 @@ const Navbar = () => {
                     </span>
                   )}
                 </Link>
-                <a className="hover:text-[var(--text-color-hover)] max-md:hidden">
-                  <UserIcon />
-                </a>
               </div>
               <div
                 onClick={() => toggleAside("aside2")}
