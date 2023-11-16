@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useUsers } from "../hooks/useUsers";
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 export const ProtectedRoute = ({ children }) => {
   const { user, authorizedUsers } = useUsers();
@@ -15,7 +16,7 @@ export const ProtectedRoute = ({ children }) => {
   }, [user, authorizedUsers]);
 
   if (isLoading) {
-    return <div>Cargando...</div>; // O un componente de carga
+    return <div>Cargando...</div>;
   }
 
   if (!isAuthorized) {
@@ -23,4 +24,8 @@ export const ProtectedRoute = ({ children }) => {
   }
 
   return children;
+};
+
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
 };
