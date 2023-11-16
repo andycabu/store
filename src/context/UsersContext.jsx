@@ -16,6 +16,8 @@ export const UsersContext = createContext();
 export const UsersProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [authorizedUsers, setAuthorizedUsers] = useState();
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Función para registrar un nuevo usuario
   const registerUser = async ({ email, password }) => {
@@ -48,6 +50,13 @@ export const UsersProvider = ({ children }) => {
   useEffect(() => {
     fetchAuthorizedUsers();
   }, []);
+
+  useEffect(() => {
+    if (user !== undefined && authorizedUsers !== undefined) {
+      setIsAuthorized(!!(user && authorizedUsers[user.uid]));
+      setIsLoading(false);
+    }
+  }, [user, authorizedUsers]);
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -97,6 +106,8 @@ export const UsersProvider = ({ children }) => {
         handleSignOut,
         fetchAuthorizedUsers,
         authorizedUsers,
+        isAuthorized,
+        isLoading,
       }}
     >
       {children}

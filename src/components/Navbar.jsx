@@ -16,7 +16,7 @@ const Navbar = () => {
   const { cartCount } = useCart();
   const [favoriteCount, setFavoriteCount] = useState(0);
   const { toggleAside } = useAside();
-  const { user, handleSignOut } = useUsers();
+  const { user, handleSignOut, isAuthorized } = useUsers();
 
   const itemsNabar = [
     {
@@ -32,6 +32,11 @@ const Navbar = () => {
       id: 3,
       text: "Contact us",
       link: "/contact",
+    },
+    isAuthorized && {
+      id: 3,
+      text: "Register product",
+      link: "/resgister-product",
     },
   ];
   useEffect(() => {
