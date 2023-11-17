@@ -216,12 +216,6 @@ export function CatalanFlag() {
       viewBox="0 0 1235 650"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      xmlns:cc="http://creativecommons.org/ns#"
-      xmlns:dc="http://purl.org/dc/elements/1.1/"
-      xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-      xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-      xmlns:svg="http://www.w3.org/2000/svg"
     >
       <defs id="defs4">
         <path
@@ -383,12 +377,6 @@ export function SpainFlag() {
       viewBox="0 0 1235 650"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      xmlns:cc="http://creativecommons.org/ns#"
-      xmlns:dc="http://purl.org/dc/elements/1.1/"
-      xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-      xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-      xmlns:svg="http://www.w3.org/2000/svg"
     >
       <clipPath id="clipPath3013">
         <path
@@ -4351,12 +4339,6 @@ export function EnglandFlag() {
       viewBox="0 0 1235 650"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      xmlns:cc="http://creativecommons.org/ns#"
-      xmlns:dc="http://purl.org/dc/elements/1.1/"
-      xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-      xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-      xmlns:svg="http://www.w3.org/2000/svg"
     >
       <clipPath id="clipPath5778">
         <path id="rect5780" d="m930.011-79.228h480v480h-480z" />
