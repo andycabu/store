@@ -34,7 +34,7 @@ const Navbar = () => {
       link: "/contact",
     },
     isAuthorized && {
-      id: 3,
+      id: 4,
       text: "Register product",
       link: "/resgister-product",
     },

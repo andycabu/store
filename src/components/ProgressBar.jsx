@@ -1,5 +1,4 @@
 const ProgressBar = ({ progress }) => {
-  console.log(progress);
   return (
     <div className="w-full bg-[var(--text-color)] rounded-lg">
       <div
