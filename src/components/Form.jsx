@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
 import Button from "./Button";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 function Form({ onSubmit, contentForm, style }) {
+  const { t } = useTranslation();
   return (
     <>
       <form className={style} onSubmit={onSubmit}>
@@ -76,7 +78,7 @@ function Form({ onSubmit, contentForm, style }) {
                         className="relative cursor-pointer bg-[var(--card-label-color)] rounded-md font-medium py-1 px-2"
                       >
                         <span className=" text-[var(--background-color)] hover">
-                          Subir imagen
+                          {t("form.upload")}
                         </span>
                         <input
                           onChange={item.img.onChange}
@@ -86,9 +88,9 @@ function Form({ onSubmit, contentForm, style }) {
                           className="sr-only "
                         />
                       </label>
-                      <p className="pl-1 ">Arrastrar o soltar</p>
+                      <p className="pl-1 ">{t("form.drag_or_drop")}</p>
                     </div>
-                    <p className="text-xs ">PNG, JPG, GIF maximo 10MB</p>
+                    <p className="text-xs ">PNG, JPG, GIF max 10MB</p>
                   </div>
                 </div>
               </div>

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useUsers } from "../hooks/useUsers";
 import Button from "../components/Button";
+import { useTranslation } from "react-i18next";
 
 function LoginOrRegisterPage() {
   const { loginUser, signInWithGoogle, user, registerUser } = useUsers();
@@ -11,7 +12,7 @@ function LoginOrRegisterPage() {
     password: "",
   });
   const { pathname } = useLocation();
-
+  const { t } = useTranslation();
   const route = pathname === "/login";
 
   const navigate = useNavigate();
@@ -43,16 +44,18 @@ function LoginOrRegisterPage() {
 
   const contentForm = [
     {
-      labelText: "Email ",
+      labelText: t("login_or_register.email"),
       name: "email",
       placeholder: "prueba@prueba.com",
       typeInput: "email",
       onChange: handleChange,
       autoComplete: "email",
-      textButton: route ? "Login" : "Register",
+      textButton: route
+        ? t("login_or_register.login")
+        : t("login_or_register.register"),
     },
     {
-      labelText: "Contraseña ",
+      labelText: t("login_or_register.password"),
       name: "password",
       placeholder: "********",
       //   typeInput: "password",
@@ -63,17 +66,21 @@ function LoginOrRegisterPage() {
   return (
     <div className="flex justify-center max-sm:p-4">
       <div className=" p-8 flex flex-col gap-4 bg-[var(--card-background-color)] rounded-md shadow-md  ">
-        <h1 className="font-bold text-2xl">Welcome {route && "back"}</h1>
+        <h1 className="font-bold text-2xl">
+          {t("login_or_register.welcome")}
+          {route && t("login_or_register.back")}
+        </h1>
         <p>
-          Start your website in seconds.
           {route
-            ? " Don’t have an account?"
-            : " Already have an account with us?"}
+            ? t("login_or_register.account_false")
+            : t("login_or_register.account_true")}
           <Link
             className=" text-xs pl-2  pt-8 text-blue-500 hover:text-blue-600 hover:border-b border-blue-600"
             to={route ? "/register" : "/login"}
           >
-            {route ? "Sign up" : "Sign in"}
+            {route
+              ? t("login_or_register.sign_up")
+              : t("login_or_register.sign_in")}
           </Link>
           .
         </p>
@@ -123,7 +130,11 @@ function LoginOrRegisterPage() {
               </svg>
             }
             onClick={signInWithGoogle}
-            text={`${route ? "Sign" : "Register"} in with Google`}
+            text={`${
+              route
+                ? t("login_or_register.sign_in")
+                : t("login_or_register.sign_up")
+            }  ${t("login_or_register.with")} Google`}
             background={
               "bg-[var(--card-background-color)] hover:bg-[var(--background-color)] border-[2px] border-[var(--background-color)] border-solid"
             }

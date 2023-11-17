@@ -16,52 +16,58 @@ import RegisterProductPage from "./pages/RegisterProductPage";
 import { UsersProvider } from "./context/UsersContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import LoginOrRegisterPage from "./pages/LoginOrRegisterPage";
+import { Suspense } from "react";
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <UsersProvider>
-          <ProductProvider>
-            <CartProvider>
-              <FilterProvider>
-                <ThemeProvider>
-                  <AsideProvider>
-                    <Navbar />
-                    <Cart />
-                    <main className="pt-28">
-                      <Routes>
-                        <Route path="/" element={<ItemListContainer />} />
-                        <Route path="/favorites" element={<FavoritePage />} />
-                        <Route
-                          path="/item/:id"
-                          element={<ItemDetailContainer />}
-                        />
-                        <Route path="/category/:id" element={<Categories />} />
-                        <Route
-                          path="/resgister-product"
-                          element={
-                            <ProtectedRoute>
-                              <RegisterProductPage />
-                            </ProtectedRoute>
-                          }
-                        />
-                        <Route
-                          path="/register"
-                          element={<LoginOrRegisterPage />}
-                        />
-                        <Route
-                          path="/login"
-                          element={<LoginOrRegisterPage />}
-                        />
-                      </Routes>
-                    </main>
-                  </AsideProvider>
-                </ThemeProvider>
-              </FilterProvider>
-            </CartProvider>
-          </ProductProvider>
-        </UsersProvider>
-      </BrowserRouter>
+      <Suspense fallback="Cargando traducciones">
+        <BrowserRouter>
+          <UsersProvider>
+            <ProductProvider>
+              <CartProvider>
+                <FilterProvider>
+                  <ThemeProvider>
+                    <AsideProvider>
+                      <Navbar />
+                      <Cart />
+                      <main className="pt-28">
+                        <Routes>
+                          <Route path="/" element={<ItemListContainer />} />
+                          <Route path="/favorites" element={<FavoritePage />} />
+                          <Route
+                            path="/item/:id"
+                            element={<ItemDetailContainer />}
+                          />
+                          <Route
+                            path="/category/:id"
+                            element={<Categories />}
+                          />
+                          <Route
+                            path="/resgister-product"
+                            element={
+                              <ProtectedRoute>
+                                <RegisterProductPage />
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            path="/register"
+                            element={<LoginOrRegisterPage />}
+                          />
+                          <Route
+                            path="/login"
+                            element={<LoginOrRegisterPage />}
+                          />
+                        </Routes>
+                      </main>
+                    </AsideProvider>
+                  </ThemeProvider>
+                </FilterProvider>
+              </CartProvider>
+            </ProductProvider>
+          </UsersProvider>
+        </BrowserRouter>
+      </Suspense>
     </>
   );
 }

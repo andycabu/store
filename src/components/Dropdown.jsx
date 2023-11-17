@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowIcon } from "./Icon";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Dropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { t } = useTranslation();
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
@@ -32,23 +33,28 @@ const Dropdown = () => {
   const dropdownItems = [
     {
       id: 1,
-      text: "electronics",
+      text: t("dropdown.electronics"),
+      category: "electronics",
     },
     {
       id: 2,
-      text: "jewelery",
+      text: t("dropdown.jewelery"),
+      category: "jewelery",
     },
     {
       id: 3,
-      text: "men's clothing",
+      text: t("dropdown.men's_clothing"),
+      category: "men's clothing",
     },
     {
       id: 4,
-      text: "women's clothing",
+      text: t("dropdown.women's_clothing"),
+      category: "women's clothing",
     },
     {
       id: 5,
-      text: "backpack",
+      text: t("dropdown.backpack"),
+      category: "backpack",
     },
   ];
 
@@ -59,7 +65,7 @@ const Dropdown = () => {
         onClick={handleClick}
         ref={buttonRef}
       >
-        <span>Categories</span>
+        <span>{t("nav.categories")}</span>
         <ArrowIcon
           className={`w-8 h-8 pr-2 cursor-pointer inline-block ${
             isOpen && "rotate-180"
@@ -81,7 +87,7 @@ const Dropdown = () => {
             <Link
               onClick={handleClick}
               to={`/category/${item.text}`}
-              state={{ category: item.text }}
+              state={{ category: item.category }}
             >
               {item.text}
             </Link>

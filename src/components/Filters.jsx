@@ -1,6 +1,7 @@
 import { useEffect, useId } from "react";
 import { useFilters } from "../hooks/useFilters";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Filters = () => {
   const { pathname } = useLocation();
@@ -16,6 +17,8 @@ const Filters = () => {
   const minPriceFilterId = useId();
   const isHomePage = pathname === "/";
   const isFavoritesPage = pathname === "/favorites";
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (pathname !== "/" || pathname !== "/favorites") {
@@ -62,7 +65,7 @@ const Filters = () => {
         </div>
         <div className="flex  max-[590px]:w-full">
           <label className="pr-4" htmlFor="">
-            search:
+            {t("filters.search")}:
           </label>
           <input
             onChange={handleChangeProduct}
@@ -79,8 +82,8 @@ const Filters = () => {
         }
       >
         <h1>
-          {(noProductsFound && "No products found") ||
-            (noFavoritesFound && "No favorite products found")}
+          {(noProductsFound && t("filters.products")) ||
+            (noFavoritesFound && t("filters.products"))}
         </h1>
       </div>
     </section>

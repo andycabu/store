@@ -7,12 +7,14 @@ import { useCart } from "../hooks/useCart";
 import useFavorites from "../hooks/useFavorite";
 import Filters from "./Filters";
 import { useFilters } from "../hooks/useFilters";
+import { useTranslation } from "react-i18next";
 
 const ItemListContainer = ({ favorites }) => {
   const { removeFromCart, addToCart } = useCart();
 
   const { filteredProducts } = useFilters();
   const { likedProducts, toggleFavorite } = useFavorites();
+  const { t } = useTranslation();
 
   const renderButton = (product, isProductInCart) => (
     <Button
@@ -20,7 +22,11 @@ const ItemListContainer = ({ favorites }) => {
         isProductInCart ? removeFromCart(product.id) : addToCart(product)
       }
       background={isProductInCart ? "bg-red-500 hover:bg-red-600" : ""}
-      text={isProductInCart ? "Remove from cart" : "Add to cart"}
+      text={
+        isProductInCart
+          ? t("shopping.remove_from_cart")
+          : t("shopping.add_to_cart")
+      }
       icon={
         isProductInCart ? (
           <RemoveFromCartIcon className={"h-6 w-6"} />

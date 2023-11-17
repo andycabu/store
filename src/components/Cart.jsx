@@ -5,11 +5,14 @@ import { formatPrecio } from "../utilities/utilitys";
 import Aside from "./Aside";
 import ButtonsCart from "./ButtonsCart";
 import { useCart } from "../hooks/useCart";
+import { useTranslation } from "react-i18next";
 
 const Cart = () => {
   const { cart, clearCart, removeFromCart, totalPrice, cartCount } = useCart();
 
   const { integer, decimals } = formatPrecio(totalPrice);
+
+  const { t } = useTranslation();
 
   return (
     <Aside id="aside2">
@@ -55,7 +58,7 @@ const Cart = () => {
       )}
       {cart.length === 0 ? (
         <span className="flex items-center justify-center h-full">
-          There are no products in the cart
+          {t("shopping.cart")}
         </span>
       ) : (
         <Button

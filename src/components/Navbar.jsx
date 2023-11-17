@@ -10,6 +10,8 @@ import CartWidget from "./CartWidget";
 import { useCart } from "../hooks/useCart";
 import { useProducts } from "../hooks/useProduct";
 import { useUsers } from "../hooks/useUsers";
+import { useTranslation } from "react-i18next";
+import Language from "./Language";
 
 const Navbar = () => {
   const { favorites } = useProducts();
@@ -17,11 +19,14 @@ const Navbar = () => {
   const [favoriteCount, setFavoriteCount] = useState(0);
   const { toggleAside } = useAside();
   const { user, handleSignOut, isAuthorized } = useUsers();
+  const { t } = useTranslation();
+  const displayName = user?.displayName;
+  const [opacity, setOpacity] = useState(1);
 
   const itemsNabar = [
     {
       id: 1,
-      text: "Home",
+      text: t("nav.home"),
       link: "/",
     },
     {
@@ -30,12 +35,12 @@ const Navbar = () => {
     },
     {
       id: 3,
-      text: "Contact us",
+      text: t("nav.contact"),
       link: "/contact",
     },
     isAuthorized && {
       id: 4,
-      text: "Register product",
+      text: t("nav.register_product"),
       link: "/resgister-product",
     },
   ];
@@ -43,11 +48,32 @@ const Navbar = () => {
     setFavoriteCount(favorites.length);
   }, [favorites]);
 
-  const displayName = user?.displayName;
+  useEffect(() => {
+    const onScroll = () => {
+      const scrollPosition = window.scrollY;
+      const newOpacity = scrollPosition > 10 ? 0 : 1; // Ajusta el 100 según tus necesidades
+
+      setOpacity(newOpacity);
+    };
+
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
       <header className="relative">
+        <div
+          className={`${
+            opacity === 0 && "hidden"
+          } p-4 transition-all duration-500 ease-in-out flex justify-between max-md:hidden`}
+          style={{ opacity }}
+        >
+          <p>{t("nav.help")}</p>
+
+          <Language />
+        </div>
+
         <nav className="flex fixed z-[101] w-full max-w-[1500px] justify-between bg-[var(--card-background-color)] box-shadow-1">
           <div className="max-md:hidden">
             <DayNight position={"absolute"} />
@@ -56,6 +82,7 @@ const Navbar = () => {
             <Link className="text-3xl font-bold font-heading" to={"/"}>
               <img className="h-12 rounded-full" src={logo} alt="" />
             </Link>
+
             <ul className="hidden md:flex px-4 mx-auto items-center font-semibold font-heading space-x-12">
               {itemsNabar.map((item) => (
                 <li key={item.id}>
@@ -127,6 +154,7 @@ const Navbar = () => {
           <Link className="hover:text-[var(--text-color-hover)]">
             <UserIcon />
           </Link>
+          <Language />
         </div>
       </Aside>
     </>
