@@ -10,25 +10,25 @@ const Language = () => {
   return (
     <div className="group flex">
       <div
-        onClick={() => changeLanguage("en")}
+        onClick={() => changeLanguage("en-EN")}
         className={`${
-          i18n.language === "en" ? "block" : "hidden group-hover:block"
+          i18n.language === "en-EN" ? "block" : "hidden group-hover:block"
         }`}
       >
         <EnglandFlag />
       </div>
       <div
-        onClick={() => changeLanguage("ca")}
+        onClick={() => changeLanguage("ca-CA")}
         className={`${
-          i18n.language === "ca" ? "block" : "hidden group-hover:block"
+          i18n.language === "ca-CA" ? "block" : "hidden group-hover:block"
         }`}
       >
         <CatalanFlag />
       </div>
       <div
-        onClick={() => changeLanguage("es")}
+        onClick={() => changeLanguage("es-ES")}
         className={`${
-          i18n.language === "es" ? "block" : "hidden group-hover:block"
+          i18n.language === "es-ES" ? "block" : "hidden group-hover:block"
         }`}
       >
         <SpainFlag />

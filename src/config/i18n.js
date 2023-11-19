@@ -21,7 +21,7 @@ const resources = {
 
 i18n.use(Backend).use(LanguageDetector).use(initReactI18next).init({
   resources,
-  fallbackLng: "en",
+  fallbackLng: "en-EN",
 });
 
 export default i18n;
