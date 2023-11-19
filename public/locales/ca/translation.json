@@ -21,7 +21,8 @@
   },
   "filters": {
     "search": "Cerca",
-    "products": "No s'han trobat productes"
+    "products": "No s'han trobat productes",
+    "price": "Preu a partir de:"
   },
   "form": {
     "upload": "Pujar imatge",

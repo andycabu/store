@@ -21,7 +21,8 @@
   },
   "filters": {
     "search": "Buscar",
-    "products": "No se encontraron productos"
+    "products": "No se encontraron productos",
+    "price": "Precio desde:"
   },
   "form": {
     "upload": "Subir imagen",

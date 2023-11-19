@@ -52,7 +52,7 @@ const Filters = () => {
     <section>
       <div className="flex justify-around max-[590px]:flex-col max-[590px]:gap-4 items-center p-4">
         <div className="flex gap-4">
-          <label htmlFor={minPriceFilterId}>Price from: </label>
+          <label htmlFor={minPriceFilterId}>{t("filters.price")} </label>
           <input
             type="range"
             id={minPriceFilterId}

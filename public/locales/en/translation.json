@@ -21,7 +21,8 @@
   },
   "filters": {
     "search": "Search",
-    "products": "No products found"
+    "products": "No products found",
+    "price": "Price from:"
   },
   "form": {
     "upload": "Upload image",
