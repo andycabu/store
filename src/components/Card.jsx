@@ -13,14 +13,14 @@ const Card = ({ products, styles, renderButton, renderLike, text }) => {
 
     return (
       <div
-        key={product.id}
+        key={product._id}
         className={`relative ${styles} rounded-xl bg-[var(--card-background-color)] bg-clip-border shadow-md max-[400px]:text-xs`}
       >
         {renderLike && renderLike(product)}
         <div
           className="max-[490px]:p-0 p-4 rounded-xl"
           onClick={() => {
-            navigate(`/item/${product.id}`, { state: { product } });
+            navigate(`/item/${product._id}`, { state: { product } });
           }}
         >
           <img

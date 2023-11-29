@@ -18,10 +18,10 @@ const Navbar = () => {
   const { cartCount } = useCart();
   const [favoriteCount, setFavoriteCount] = useState(0);
   const { toggleAside } = useAside();
-  const { user, handleSignOut, isAuthorized } = useUsers();
+  const { user, logout } = useUsers();
   const { t } = useTranslation();
-  const displayName = user?.displayName;
-  const [opacity, setOpacity] = useState(1);
+  const displayName = user?.userName;
+  const [display, setDisplay] = useState("");
 
   const itemsNabar = [
     {
@@ -38,11 +38,11 @@ const Navbar = () => {
       text: t("nav.contact"),
       link: "/contact",
     },
-    isAuthorized && {
-      id: 4,
-      text: t("nav.register_product"),
-      link: "/resgister-product",
-    },
+    // isAuthorized && {
+    //   id: 4,
+    //   text: t("nav.register_product"),
+    //   link: "/resgister-product",
+    // },
   ];
   useEffect(() => {
     setFavoriteCount(favorites.length);
@@ -51,9 +51,9 @@ const Navbar = () => {
   useEffect(() => {
     const onScroll = () => {
       const scrollPosition = window.scrollY;
-      const newOpacity = scrollPosition > 10 ? 0 : 1; // Ajusta el 100 según tus necesidades
 
-      setOpacity(newOpacity);
+      const threshold = 0;
+      setDisplay(scrollPosition > threshold && "hidden");
     };
 
     window.addEventListener("scroll", onScroll);
@@ -64,16 +64,11 @@ const Navbar = () => {
     <>
       <header className="relative">
         <div
-          className={`${
-            opacity === 0 && "hidden"
-          } p-4 transition-all duration-500 ease-in-out flex justify-between max-md:hidden`}
-          style={{ opacity }}
+          className={`${"hidden"} p-4 transition-all duration-500 ease-in-out flex justify-between max-md:hidden`}
         >
           <p>{t("nav.help")}</p>
-
           <Language />
         </div>
-
         <nav className="flex fixed z-[101] w-full max-w-[1500px] justify-between bg-[var(--card-background-color)] box-shadow-1">
           <div className="max-md:hidden">
             <DayNight position={"absolute"} />
@@ -102,7 +97,7 @@ const Navbar = () => {
                 <Link to={!user && "login"}>
                   {displayName ? displayName : "Login"}
                 </Link>
-                <button className={!user && "hidden"} onClick={handleSignOut}>
+                <button className={!user && "hidden"} onClick={logout}>
                   out
                 </button>
                 <Link

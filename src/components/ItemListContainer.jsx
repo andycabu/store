@@ -41,7 +41,6 @@ const ItemListContainer = ({ favorites }) => {
       <Like checked={likedProducts[product.id]} />
     </div>
   );
-
   return (
     <>
       <Filters />

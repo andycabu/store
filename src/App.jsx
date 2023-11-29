@@ -15,8 +15,9 @@ import { CartProvider } from "./context/CartContext";
 import RegisterProductPage from "./pages/RegisterProductPage";
 import { UsersProvider } from "./context/UsersContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import LoginOrRegisterPage from "./pages/LoginOrRegisterPage";
+import RegisterPage from "./pages/RegisterPage";
 import { Suspense } from "react";
+import LoginPage from "./pages/LoginPage";
 function App() {
   return (
     <>
@@ -50,14 +51,8 @@ function App() {
                               </ProtectedRoute>
                             }
                           />
-                          <Route
-                            path="/register"
-                            element={<LoginOrRegisterPage />}
-                          />
-                          <Route
-                            path="/login"
-                            element={<LoginOrRegisterPage />}
-                          />
+                          <Route path="/register" element={<RegisterPage />} />
+                          <Route path="/login" element={<LoginPage />} />
                         </Routes>
                       </main>
                     </AsideProvider>

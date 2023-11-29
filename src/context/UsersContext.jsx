@@ -1,113 +1,108 @@
-import { createContext, useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { auth, database } from "../../db/firebase";
+import { createContext, useState, useEffect } from "react";
 import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-  onAuthStateChanged,
-  signOut,
-} from "firebase/auth";
-import { ref, onValue } from "firebase/database";
+  registerRequest,
+  loginRequest,
+  verifyTokenRequest,
+  logoutRequest,
+} from "../api/auth";
+
+import PropTypes from "prop-types";
+import Cookies from "js-cookie";
 
 export const UsersContext = createContext();
 
 export const UsersProvider = ({ children }) => {
-  const [user, setUser] = useState();
-  const [authorizedUsers, setAuthorizedUsers] = useState();
-  const [isAuthorized, setIsAuthorized] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [deleted, setDeleted] = useState(false);
 
-  // Función para registrar un nuevo usuario
-  const registerUser = async ({ email, password }) => {
+  const signUp = async (user) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      // Usuario registrado con éxito, userCredential.user contiene la información del usuario
-      setUser(userCredential);
-    } catch (error) {
-      console.error("Error al registrar el usuario:", error);
-    }
-  };
+      const res = await registerRequest(user);
 
-  const fetchAuthorizedUsers = async () => {
-    const authUsersRef = ref(database, "/authorizedUsers");
-    onValue(
-      authUsersRef,
-      (snapshot) => {
-        const authorizedUsers = snapshot.val();
-        setAuthorizedUsers(authorizedUsers);
-      },
-      (error) => {
-        console.error(error);
+      if (res.status === 200) {
+        setUser(res.data);
+        setIsAuthenticated(true);
       }
-    );
-  };
-  useEffect(() => {
-    fetchAuthorizedUsers();
-  }, []);
-
-  useEffect(() => {
-    if (user !== undefined && authorizedUsers !== undefined) {
-      setIsAuthorized(!!(user && authorizedUsers[user.uid]));
-      setIsLoading(false);
-    }
-  }, [user, authorizedUsers]);
-
-  const signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    const registeredUser = await signInWithPopup(auth, provider);
-    const { user } = registeredUser;
-    setUser(user);
-  };
-
-  // Función para iniciar sesión
-  const loginUser = async ({ email, password }) => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      // Usuario inició sesión con éxito, userCredential.user contiene la información del usuario
     } catch (error) {
-      console.error("Error al iniciar sesión:", error);
+      setError(error.response.data);
     }
   };
-  const handleSignOut = () => {
-    signOut(auth);
+  const signIn = async (user) => {
+    try {
+      const res = await loginRequest(user);
+
+      if (res.status === 200) {
+        setUser(res.data);
+        setIsAuthenticated(true);
+      }
+    } catch (error) {
+      setError(error.response.data);
+    }
   };
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        // Usuario está conectado
-        setUser(currentUser);
-      } else {
-        // Usuario no está conectado
+  const logout = async () => {
+    const res = await logoutRequest();
+    try {
+      if (res.status === 200) {
         setUser(null);
+        setIsAuthenticated(false);
+        Cookies.remove("token");
       }
-    });
+    } catch (error) {
+      setError(error.response.data);
+    }
+  };
 
-    // Desuscribirse del observador cuando el componente se desmonte
-    return () => unsubscribe();
+  useEffect(() => {
+    if (error) {
+      const tiemer = setTimeout(() => {
+        setError(null);
+      }, 3000);
+      return () => clearTimeout(tiemer);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    async function checkLogin() {
+      const cookies = Cookies.get();
+
+      if (!cookies.token) {
+        setIsAuthenticated(false);
+        setUser(null);
+        setLoading(false);
+        return;
+      }
+      try {
+        const res = await verifyTokenRequest(cookies.token);
+        if (res.data) {
+          setLoading(false);
+          setUser(res.data);
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        setIsAuthenticated(false);
+        setUser(null);
+        setLoading(false);
+      }
+    }
+    checkLogin();
   }, []);
 
   return (
     <UsersContext.Provider
       value={{
+        loading,
         user,
-        registerUser,
-        loginUser,
-        signInWithGoogle,
-        handleSignOut,
-        fetchAuthorizedUsers,
-        authorizedUsers,
-        isAuthorized,
-        isLoading,
+        signUp,
+        signIn,
+        error,
+        setError,
+        isAuthenticated,
+        logout,
+        deleted,
+        setDeleted,
       }}
     >
       {children}
