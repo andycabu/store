@@ -1,7 +1,11 @@
 import { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useUsers } from "../hooks/useUsers";
-import { addProductRequest, favoritesRequest } from "../api/favorite";
+import {
+  addProductRequest,
+  favoritesRequest,
+  deleteProductRequest,
+} from "../api/favorite";
 
 export const ProductContext = createContext();
 
@@ -35,14 +39,28 @@ export const ProductProvider = ({ children }) => {
   };
 
   const addToFavorite = async (product) => {
+    const isFavorite = favorites.some((fav) => fav._id === product._id);
     try {
-      const res = await addProductRequest({ userId, productId: product._id });
-
-      if (res.status === 200) {
-        setFavorites((currentFavorites) => [...currentFavorites, res.data]);
+      if (isFavorite) {
+        // Si el producto ya está en favoritos, envía una solicitud para eliminarlo
+        const res = await deleteProductRequest(product._id);
+        if (res.status === 200) {
+          // Actualiza el estado eliminando este producto de los favoritos
+          setFavorites((currentFavorites) =>
+            currentFavorites.filter((fav) => fav._id !== product._id)
+          );
+        }
+      } else {
+        // Si el producto no está en favoritos, envía una solicitud para añadirlo
+        const res = await addProductRequest({ userId, productId: product._id });
+        if (res.status === 200) {
+          // Actualiza el estado añadiendo este producto a los favoritos
+          setFavorites((currentFavorites) => [...currentFavorites, res.data]);
+        }
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error al actualizar favoritos", error);
+      // Aquí puedes manejar errores, como mostrar un mensaje al usuario
     }
   };
 
