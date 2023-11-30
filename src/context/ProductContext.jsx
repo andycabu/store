@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useUsers } from "../hooks/useUsers";
+import { addProductRequest, favoritesRequest } from "../api/favorite";
 
 export const ProductContext = createContext();
 
@@ -13,30 +14,36 @@ export const ProductProvider = ({ children }) => {
     minPrice: 0,
     title: "",
   });
-  const [favorites, setFavorites] = useState(() => {
-    const savedFavorites = window.localStorage.getItem("favorites");
-    return savedFavorites ? JSON.parse(savedFavorites) : [];
-  });
-  const updateToLocalStorage = (state) => {
-    window.localStorage.setItem("favorites", JSON.stringify(state));
-  };
+  const [favorites, setFavorites] = useState([]);
+  const userId = user?.id;
   const getProducts = async () => {
     const res = await fetch("http://localhost:4000/api/products");
     const data = await res.json();
     setProducts(data);
   };
 
-  const addToFavorite = (product) => {
-    setFavorites((prevFavorites) => {
-      const isFavorite = prevFavorites.some((fav) => fav._id === product._id);
-      const newFavorites = isFavorite
-        ? prevFavorites.filter((fav) => fav._id !== product._id)
-        : [...prevFavorites, product];
+  const getFavorites = async () => {
+    try {
+      const res = await favoritesRequest(userId);
 
-      updateToLocalStorage(newFavorites);
+      if (res.status === 200) {
+        setFavorites(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-      return newFavorites;
-    });
+  const addToFavorite = async (product) => {
+    try {
+      const res = await addProductRequest({ userId, productId: product._id });
+
+      if (res.status === 200) {
+        setFavorites((currentFavorites) => [...currentFavorites, res.data]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -44,6 +51,12 @@ export const ProductProvider = ({ children }) => {
       getProducts();
     }
   }, []);
+
+  useEffect(() => {
+    if (favorites.length < 1) {
+      getFavorites();
+    }
+  }, [user]);
 
   return (
     <ProductContext.Provider
