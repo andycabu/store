@@ -12,17 +12,17 @@ const ButtonsCart = ({ product }) => {
     checkProductInCart,
   } = useCart();
 
-  const quantity = getQuantity(product.id);
+  const quantity = getQuantity(product._id);
   const displayQuantity =
-    tempQuantities[product.id] !== undefined
-      ? tempQuantities[product.id]
+    tempQuantities[product._id] !== undefined
+      ? tempQuantities[product._id]
       : quantity;
   const isProductInCart = checkProductInCart(product);
   return (
     <div className="flex gap-1">
       {quantity === 1 && isProductInCart ? (
         <Button
-          onClick={() => removeFromCart(product.id)}
+          onClick={() => removeFromCart(product._id)}
           background={"bg-red-500 hover:bg-red-600"}
           icon={<ClearCartIcon className={"h-6 w-6 "} />}
         />

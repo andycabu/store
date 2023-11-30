@@ -1,9 +1,12 @@
 import { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { useUsers } from "../hooks/useUsers";
 
 export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
+  const { user } = useUsers();
+
   const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState({
     category: "all categories",
@@ -25,9 +28,9 @@ export const ProductProvider = ({ children }) => {
 
   const addToFavorite = (product) => {
     setFavorites((prevFavorites) => {
-      const isFavorite = prevFavorites.some((fav) => fav.id === product.id);
+      const isFavorite = prevFavorites.some((fav) => fav._id === product._id);
       const newFavorites = isFavorite
-        ? prevFavorites.filter((fav) => fav.id !== product.id)
+        ? prevFavorites.filter((fav) => fav._id !== product._id)
         : [...prevFavorites, product];
 
       updateToLocalStorage(newFavorites);

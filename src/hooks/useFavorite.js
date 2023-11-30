@@ -8,17 +8,17 @@ const useFavorites = () => {
     const favoritesFromStorage =
       JSON.parse(localStorage.getItem("favorites")) || [];
     return favoritesFromStorage.reduce((acc, product) => {
-      acc[product.id] = true;
+      acc[product._id] = true;
       return acc;
     }, {});
   });
 
   const toggleFavorite = (product) => {
     setLikedProducts((prev) => {
-      const isAlreadyFavorite = likedProducts[product.id];
+      const isAlreadyFavorite = likedProducts[product._id];
       return {
         ...prev,
-        [product.id]: !isAlreadyFavorite,
+        [product._id]: !isAlreadyFavorite,
       };
     });
     addToFavorite(product);

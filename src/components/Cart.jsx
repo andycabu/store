@@ -44,7 +44,7 @@ const Cart = () => {
                   <ButtonsCart product={product} />
                   {product.quantity > 1 && (
                     <Button
-                      onClick={() => removeFromCart(product.id)}
+                      onClick={() => removeFromCart(product._id)}
                       background={"bg-red-500 hover:bg-red-600"}
                       icon={<ClearCartIcon className={"h-6 w-6 "} />}
                     />

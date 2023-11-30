@@ -15,14 +15,16 @@ export const CartProvider = ({ children }) => {
   const [tempQuantities, setTempQuantities] = useState({});
 
   function addToCart(product) {
-    const productInCartIndex = cart.findIndex((item) => item.id === product.id);
+    const productInCartIndex = cart.findIndex(
+      (item) => item._id === product._id
+    );
 
     if (productInCartIndex >= 0) {
       const newCart = structuredClone(cart);
-      const additionalQuantity = tempQuantities[product.id] || 1;
+      const additionalQuantity = tempQuantities[product._id] || 1;
       newCart[productInCartIndex].quantity += additionalQuantity;
 
-      delete tempQuantities[product.id];
+      delete tempQuantities[product._id];
       updateToLocalStorage(newCart);
       setCart(newCart);
       return newCart;
@@ -32,16 +34,18 @@ export const CartProvider = ({ children }) => {
       ...cart,
       {
         ...product,
-        quantity: tempQuantities[product.id] || 1,
+        quantity: tempQuantities[product._id] || 1,
       },
     ];
-    delete tempQuantities[product.id];
+    delete tempQuantities[product._id];
     updateToLocalStorage(newState);
     setCart(newState);
     return newState;
   }
   function updateProductQuantity(product, quantityChange) {
-    const productInCartIndex = cart.findIndex((item) => item.id === product.id);
+    const productInCartIndex = cart.findIndex(
+      (item) => item._id === product._id
+    );
 
     if (productInCartIndex >= 0) {
       const newCart = structuredClone(cart);
@@ -54,19 +58,19 @@ export const CartProvider = ({ children }) => {
     } else {
       setTempQuantities((prevQuantities) => {
         const newTempQuantity = Math.max(
-          (prevQuantities[product.id] || 0) + quantityChange,
+          (prevQuantities[product._id] || 0) + quantityChange,
           0
         );
         return {
           ...prevQuantities,
-          [product.id]: newTempQuantity,
+          [product._id]: newTempQuantity,
         };
       });
     }
   }
 
   const removeFromCart = (id) => {
-    const newState = cart.filter((item) => item.id !== id);
+    const newState = cart.filter((item) => item._id !== id);
     setCart(newState);
     updateToLocalStorage(newState);
     return newState;
@@ -81,10 +85,10 @@ export const CartProvider = ({ children }) => {
     updateToLocalStorage([]);
   };
   const checkProductInCart = (product) =>
-    cart.some((item) => item.id === product.id);
+    cart.some((item) => item._id === product._id);
 
   const getQuantity = (productId) => {
-    const productInCartIndex = cart.findIndex((item) => item.id === productId);
+    const productInCartIndex = cart.findIndex((item) => item._id === productId);
     if (productInCartIndex >= 0) {
       return cart[productInCartIndex].quantity;
     }

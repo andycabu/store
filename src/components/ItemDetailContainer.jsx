@@ -19,7 +19,7 @@ const ItemDetailContainer = () => {
   return (
     <div className="max-[1500px]:px-4 max-[1500px]:pb-4 flex justify-center ">
       <div onClick={() => toggleFavorite(product)}>
-        <Like checked={likedProducts[product.id]} />
+        <Like checked={likedProducts[product._id]} />
       </div>
       <div className="flex max-[584px]:flex-col  rounded-xl bg-[var(--card-background-color)] bg-clip-border shadow-md max-[400px]:text-xs">
         <div className="flex justify-center p-4 overflow-hidden rounded-xl">
@@ -45,7 +45,7 @@ const ItemDetailContainer = () => {
             <Button
               onClick={() =>
                 isProductInCart
-                  ? removeFromCart(product.id)
+                  ? removeFromCart(product._id)
                   : addToCart(product)
               }
               background={isProductInCart ? "bg-red-500 hover:bg-red-600" : ""}

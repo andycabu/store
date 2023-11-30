@@ -19,7 +19,7 @@ const ItemListContainer = ({ favorites }) => {
   const renderButton = (product, isProductInCart) => (
     <Button
       onClick={() =>
-        isProductInCart ? removeFromCart(product.id) : addToCart(product)
+        isProductInCart ? removeFromCart(product._id) : addToCart(product)
       }
       background={isProductInCart ? "bg-red-500 hover:bg-red-600" : ""}
       text={
@@ -38,7 +38,7 @@ const ItemListContainer = ({ favorites }) => {
   );
   const renderLike = (product) => (
     <div onClick={() => toggleFavorite(product)}>
-      <Like checked={likedProducts[product.id]} />
+      <Like checked={likedProducts[product._id]} />
     </div>
   );
   return (
