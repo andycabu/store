@@ -1,17 +1,9 @@
 // hooks/useFavorites.js
-import { useState } from "react";
+
 import { useProducts } from "./useProduct";
 
 const useFavorites = () => {
-  const { addToFavorite } = useProducts();
-  const [likedProducts, setLikedProducts] = useState(() => {
-    const favoritesFromStorage =
-      JSON.parse(localStorage.getItem("favorites")) || [];
-    return favoritesFromStorage.reduce((acc, product) => {
-      acc[product._id] = true;
-      return acc;
-    }, {});
-  });
+  const { addToFavorite, likedProducts, setLikedProducts } = useProducts();
 
   const toggleFavorite = (product) => {
     setLikedProducts((prev) => {
@@ -24,7 +16,7 @@ const useFavorites = () => {
     addToFavorite(product);
   };
 
-  return { likedProducts, toggleFavorite };
+  return { toggleFavorite };
 };
 
 export default useFavorites;

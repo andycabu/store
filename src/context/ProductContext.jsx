@@ -19,13 +19,13 @@ export const ProductProvider = ({ children }) => {
     title: "",
   });
   const [favorites, setFavorites] = useState([]);
+  const [likedProducts, setLikedProducts] = useState({});
   const userId = user?.id;
   const getProducts = async () => {
     const res = await fetch("http://localhost:4000/api/products");
     const data = await res.json();
     setProducts(data);
   };
-
   const getFavorites = async () => {
     try {
       const res = await favoritesRequest(userId);
@@ -38,29 +38,35 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
-  const addToFavorite = async (product) => {
+  const addToFavorite = async (product, favoriteId) => {
     const isFavorite = favorites.some((fav) => fav._id === product._id);
     try {
       if (isFavorite) {
-        // Si el producto ya está en favoritos, envía una solicitud para eliminarlo
+        // Eliminar el producto de favoritos
         const res = await deleteProductRequest(product._id);
         if (res.status === 200) {
-          // Actualiza el estado eliminando este producto de los favoritos
           setFavorites((currentFavorites) =>
             currentFavorites.filter((fav) => fav._id !== product._id)
           );
+          setLikedProducts((currentLikedProducts) => {
+            const newLikedProducts = { ...currentLikedProducts };
+            delete newLikedProducts[product._id];
+            return newLikedProducts;
+          });
         }
       } else {
-        // Si el producto no está en favoritos, envía una solicitud para añadirlo
+        // Añadir el producto a favoritos
         const res = await addProductRequest({ userId, productId: product._id });
         if (res.status === 200) {
-          // Actualiza el estado añadiendo este producto a los favoritos
           setFavorites((currentFavorites) => [...currentFavorites, res.data]);
+          setLikedProducts((currentLikedProducts) => ({
+            ...currentLikedProducts,
+            [product._id]: true,
+          }));
         }
       }
     } catch (error) {
       console.error("Error al actualizar favoritos", error);
-      // Aquí puedes manejar errores, como mostrar un mensaje al usuario
     }
   };
 
@@ -85,6 +91,8 @@ export const ProductProvider = ({ children }) => {
         addToFavorite,
         filters,
         favorites,
+        likedProducts,
+        setLikedProducts,
       }}
     >
       {children}

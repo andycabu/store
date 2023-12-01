@@ -40,7 +40,9 @@ export const FilterProvider = ({ children }) => {
   };
 
   const filteredProducts = filterProducts(products || [], filters);
-  const filteredFavorites = filterFavorites(favorites || []);
+  const filteredFavorites = filterFavorites(
+    favorites.map((favorite) => favorite.product) || []
+  );
 
   return (
     <FilterContext.Provider

@@ -4,16 +4,16 @@ import Like from "./Like";
 import PropTypes from "prop-types";
 import { AddToCartIcon, RemoveFromCartIcon } from "./Icon";
 import { useCart } from "../hooks/useCart";
-import useFavorites from "../hooks/useFavorite";
 import Filters from "./Filters";
 import { useFilters } from "../hooks/useFilters";
 import { useTranslation } from "react-i18next";
+import { useProducts } from "../hooks/useProduct";
 
 const ItemListContainer = ({ favorites }) => {
   const { removeFromCart, addToCart } = useCart();
 
   const { filteredProducts } = useFilters();
-  const { likedProducts, toggleFavorite } = useFavorites();
+  const { likedProducts, addToFavorite } = useProducts();
   const { t } = useTranslation();
 
   const renderButton = (product, isProductInCart) => (
@@ -36,8 +36,9 @@ const ItemListContainer = ({ favorites }) => {
       }
     />
   );
+  console.log(likedProducts);
   const renderLike = (product) => (
-    <div onClick={() => toggleFavorite(product)}>
+    <div onClick={() => addToFavorite(product)}>
       <Like checked={likedProducts[product._id]} />
     </div>
   );
