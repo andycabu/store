@@ -32,21 +32,27 @@ export const ProductProvider = ({ children }) => {
 
       if (res.status === 200) {
         setFavorites(res.data);
+        const newLikedProducts = res.data.reduce((acc, favorite) => {
+          acc[favorite.product._id] = true;
+          return acc;
+        }, {});
+        setLikedProducts(newLikedProducts);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const addToFavorite = async (product, favoriteId) => {
-    const isFavorite = favorites.some((fav) => fav._id === product._id);
+  const addToFavorite = async (product) => {
+    const favorite = favorites.find((fav) => fav.product._id === product._id);
+    const isFavorite = favorite !== undefined;
+
     try {
       if (isFavorite) {
-        // Eliminar el producto de favoritos
-        const res = await deleteProductRequest(product._id);
+        const res = await deleteProductRequest(favorite._id);
         if (res.status === 200) {
           setFavorites((currentFavorites) =>
-            currentFavorites.filter((fav) => fav._id !== product._id)
+            currentFavorites.filter((fav) => fav._id !== favorite._id)
           );
           setLikedProducts((currentLikedProducts) => {
             const newLikedProducts = { ...currentLikedProducts };
@@ -55,7 +61,6 @@ export const ProductProvider = ({ children }) => {
           });
         }
       } else {
-        // Añadir el producto a favoritos
         const res = await addProductRequest({ userId, productId: product._id });
         if (res.status === 200) {
           setFavorites((currentFavorites) => [...currentFavorites, res.data]);
@@ -66,7 +71,7 @@ export const ProductProvider = ({ children }) => {
         }
       }
     } catch (error) {
-      console.error("Error al actualizar favoritos", error);
+      console.error("Tienes que estar registrado para agregar a favoritos ");
     }
   };
 
@@ -77,10 +82,13 @@ export const ProductProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (favorites.length < 1) {
+    if (userId) {
       getFavorites();
+    } else {
+      setFavorites([]);
+      setLikedProducts({});
     }
-  }, [user]);
+  }, [userId]);
 
   return (
     <ProductContext.Provider

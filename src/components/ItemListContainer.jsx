@@ -36,12 +36,14 @@ const ItemListContainer = ({ favorites }) => {
       }
     />
   );
-  console.log(likedProducts);
-  const renderLike = (product) => (
-    <div onClick={() => addToFavorite(product)}>
-      <Like checked={likedProducts[product._id]} />
-    </div>
-  );
+
+  const renderLike = (product) => {
+    return (
+      <div onClick={() => addToFavorite(product)}>
+        <Like checked={likedProducts[product._id]} />
+      </div>
+    );
+  };
   return (
     <>
       <Filters />

@@ -64,7 +64,7 @@ const Navbar = () => {
     <>
       <header className="relative">
         <div
-          className={`${"hidden"} p-4 transition-all duration-500 ease-in-out flex justify-between max-md:hidden`}
+          className={`${display} p-4 transition-all duration-500 ease-in-out flex justify-between max-md:hidden`}
         >
           <p>{t("nav.help")}</p>
           <Language />

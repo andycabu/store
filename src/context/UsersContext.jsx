@@ -14,7 +14,7 @@ export const UsersContext = createContext();
 export const UsersProvider = ({ children }) => {
   const [error, setError] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
   const [deleted, setDeleted] = useState(false);
 

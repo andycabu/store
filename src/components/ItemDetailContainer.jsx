@@ -3,22 +3,22 @@ import { formatPrecio } from "../utilities/utilitys";
 import Button from "./Button";
 import { AddToCartIcon, RemoveFromCartIcon } from "./Icon";
 import Like from "./Like";
-import useFavorites from "../hooks/useFavorite";
 import ButtonsCart from "./ButtonsCart";
 import { useCart } from "../hooks/useCart";
+import { useProducts } from "../hooks/useProduct";
 
 const ItemDetailContainer = () => {
   const { state } = useLocation();
   const { product } = state;
   const { integer, decimals } = formatPrecio(product.price);
   const { removeFromCart, addToCart, checkProductInCart } = useCart();
-  const { toggleFavorite, likedProducts } = useFavorites();
+  const { addToFavorite, likedProducts } = useProducts();
 
   const isProductInCart = checkProductInCart(product);
 
   return (
     <div className="max-[1500px]:px-4 max-[1500px]:pb-4 flex justify-center ">
-      <div onClick={() => toggleFavorite(product)}>
+      <div onClick={() => addToFavorite(product)}>
         <Like checked={likedProducts[product._id]} />
       </div>
       <div className="flex max-[584px]:flex-col  rounded-xl bg-[var(--card-background-color)] bg-clip-border shadow-md max-[400px]:text-xs">
