@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { formatPrecio } from "../utilities/utilitys";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../hooks/useCart";
+import withLogged from "./LoggerComponent";
 
 const Card = ({ products, styles, renderButton, renderLike, text }) => {
   const { checkProductInCart } = useCart();
@@ -10,7 +11,8 @@ const Card = ({ products, styles, renderButton, renderLike, text }) => {
   return products.map((product) => {
     const isProductInCart = checkProductInCart(product);
     const { integer, decimals } = formatPrecio(product.price);
-
+    // const prueba2 =
+    // const Prueba = withLogged(prueba2);
     return (
       <div
         key={product._id}

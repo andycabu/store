@@ -6,6 +6,7 @@ import Like from "./Like";
 import ButtonsCart from "./ButtonsCart";
 import { useCart } from "../hooks/useCart";
 import { useProducts } from "../hooks/useProduct";
+import withLogged from "./LoggerComponent";
 
 const ItemDetailContainer = () => {
   const { state } = useLocation();
@@ -15,11 +16,12 @@ const ItemDetailContainer = () => {
   const { addToFavorite, likedProducts } = useProducts();
 
   const isProductInCart = checkProductInCart(product);
+  const Prueba = withLogged(<Like checked={likedProducts[product._id]} />);
 
   return (
     <div className="max-[1500px]:px-4 max-[1500px]:pb-4 flex justify-center ">
       <div onClick={() => addToFavorite(product)}>
-        <Like checked={likedProducts[product._id]} />
+        <Prueba />
       </div>
       <div className="flex max-[584px]:flex-col  rounded-xl bg-[var(--card-background-color)] bg-clip-border shadow-md max-[400px]:text-xs">
         <div className="flex justify-center p-4 overflow-hidden rounded-xl">
